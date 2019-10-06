@@ -1,0 +1,27 @@
+<h5>イベント・イメージをアップロードする</h5>
+<div class="dropzone" dropzone
+(hovered)="toggleHover($event)"
+(dropped)="onDrop($event)"
+[class.hovering]="isHovering">
+
+
+<p>ドラッグ＆ドロップかファイル選択</p>
+
+<div class="file">
+<label class="file-label">
+
+
+<input class="file-input" type="file" (change)="onDrop($event.target.files)">
+  </label>
+  
+  </div>
+  </div> 
+  
+  <h5>アップロード</h5>
+  <div *ngFor="let file of files">
+  
+  <upload-event-task [file]="file"></upload-event-task>
+  
+  
+  
+  </div>

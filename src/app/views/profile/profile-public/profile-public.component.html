@@ -1,0 +1,108 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+
+  
+     
+    <div *ngIf="user" fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+      <mat-card  class="profile-sidebar mb-1 pb-0">
+        <div class="propic text-center">
+         <img style="width:120px" [src]="user.photoURL" alt=""> 
+        </div>
+        <div class="profile-title text-center mb-1">
+          <div class="main-title">{{user.displayName}}</div>
+          <div class="subtitle mb-05">{{user.mail}}</div>
+          <!-- <div class="text-muted" [innerHTML]="user.shortIntro"></div> -->
+        </div>
+        <div class="profile-actions text-center mb-1">
+          <!-- <button mat-raised-button color="primary">{{notconnected}}</button> -->
+
+          <button [disabled]="true" mat-raised-button color="primary" *ngIf="connected && connectedState==true">{{connection}}</button>
+          <button  mat-raised-button color="primary" *ngIf="connectedState==false" (click)="ConnectWithUser()">コネクトする</button>
+        
+          <!-- <button mat-raised-button color="accent">Follow</button> -->
+        </div>
+      </mat-card>
+    </div>
+    
+   
+ 
+  
+  <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+
+      <mat-card *ngIf="user" class="p-0">
+          <mat-card-title class=" m-0">
+            <div class="card-title-text">
+              <span>{{user.displayName}}さんの情報</span>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+        <div> 
+          <br>
+          <small><p class="text-muted" [innerHTML]="user.shortIntro"></p> </small>
+        </div>
+          </mat-card-content>
+        </mat-card>
+    
+          <mat-card 
+          [class.mat-elevation-z0]="!isActive" 
+          [style.border]="'1px solid #darkgrey'"
+          [style.background-color]="'transparent'"
+          [style.margin-left]="'5px'"
+          *ngIf="artists"
+           class="p-0">
+          <mat-card-title class="m-0">
+            <div class="card-title-text">このユーザーがフォローしているアーティスト</div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content  class="p-0">
+            <mat-grid-list  cols="5" rowHeight="1:0.65" class="app-gallery">
+              <!-- Gallery item -->
+              <mat-grid-tile *ngFor="let art of artists">
+                <img [src]="art.path" alt="">
+                <!-- item detail, show on hover -->
+                <div class="gallery-control-wrap">
+                  <div class="gallery-control">
+                    <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{art.artistName}}</h4>
+                    <span fxFlex></span>
+                  </div>
+                </div>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-card-content>
+        </mat-card>
+
+
+        <mat-card 
+        [class.mat-elevation-z0]="!isActive" 
+        [style.border]="'1px solid #darkgrey'"
+        [style.background-color]="'transparent'"
+        [style.margin-left]="'5px'"
+        *ngIf="projects"
+         class="p-0">
+        <mat-card-title class="m-0">
+          <div class="card-title-text">このユーザーがフォローしているプロジェクト</div>
+          <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="p-0">
+          <mat-grid-list   cols="5" rowHeight="1:0.65" class="app-gallery">
+            <!-- Gallery item -->
+            <mat-grid-tile *ngFor="let proj of projects">
+              <img [src]="proj.path"  alt="">
+              <!-- item detail, show on hover -->
+              <div class="gallery-control-wrap">
+                <div class="gallery-control">
+                  <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{proj.projectName}}</h4>
+                  <span fxFlex></span>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-md="50">
+
+    </div>
+</div>

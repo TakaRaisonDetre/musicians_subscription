@@ -1,0 +1,53 @@
+
+<mat-card 
+[class.mat-elevation-z0]="!isActive" 
+[style.border]="'1px solid #ddd'"
+[style.background-color]="'transparent'"
+>
+  <mat-card-title>
+    <h3>Featured Artists</h3>
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <br><p><small>The list below includes Shibuya Show Case 2018 featured artists </small></p>
+  </mat-card-content>
+</mat-card>
+
+
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div *ngFor="let artist of art"  fxFlex="100" fxFlex.gt-xs="25">
+      <mat-card class="p-0">
+        <mat-card-title class="mat-bg-primary m-0">
+          <div class="card-title-text">
+            <span>{{artist.name}}</span>
+            <span fxFlex></span>
+            <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu1="matMenu">
+              <button (click)="navigatetoKey($event, artist)" mat-menu-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Detail Info</span>
+              </button>
+              
+            </mat-menu>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-card-title>
+        <img (click)="navigatetoKey($event, artist)" mat-card-image [src]="artist.path">
+        <mat-card-content>
+          <p class="customTruncatedText">
+            {{artist.short_description_en | truncate:[20, '...']}}
+          </p>
+          <mat-divider class="mb-1"></mat-divider>
+          <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+          <button (click)="navigatetoKey($event, artist)" mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    
+  </div>
+  
+  

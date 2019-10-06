@@ -1,0 +1,48 @@
+<form [formGroup]="mailForm" novalidate (submit)="sendEmail()">
+  <div class="pb-1">
+    <p>To : <span>{{recieverName}}</span></p>
+  </div>
+ 
+  <div class="pb-1">
+      <mat-form-field class="full-width">
+          <input
+          matInput
+          name="subject"
+          formControlName="subject"
+          placeholder="Subject"
+          value="">
+      </mat-form-field>
+      <small 
+      *ngIf="mailForm.controls.subject.errors && 
+      (mailForm.controls.subject.dirty || mailForm.controls.subject.touched) && 
+      (mailForm.controls.subject.errors.required)" 
+      class="form-error-msg"> メールタイトルが必要です </small>
+  </div>
+  <div class="pb-1">
+      <quill-editor theme="snow" formControlName="message"></quill-editor>
+      <small 
+      *ngIf="mailForm.controls.message.errors && 
+      (mailForm.controls.message.dirty || mailForm.controls.message.touched) && 
+      (mailForm.controls.message.errors.required)" 
+      class="form-error-msg"> メッセージが必要です </small>
+  </div>
+
+  <div class="">
+      <button
+      type="button"
+      mat-button 
+      matDialogClose>Cancel</button>
+      <span fxFlex></span>
+      <button 
+      mat-mini-fab 
+      class="mat-primary" 
+      matDialogClose>
+      <mat-icon>clear</mat-icon></button> 
+      
+      <button 
+      mat-mini-fab 
+      class="mat-primary" 
+      [disabled]="mailForm.invalid" 
+      type="submit"><mat-icon>send</mat-icon></button>
+  </div>
+</form>

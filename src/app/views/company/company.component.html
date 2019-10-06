@@ -1,0 +1,53 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+ 
+ 
+  <div  fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+    <mat-card [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'1px solid #ddd'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+     class="profile-sidebar mb-1 pb-0">
+      <div class="profile-nav">
+        <mat-nav-list>
+          <!-- <mat-list-item routerLink="/projects/project-list">  -->
+            <mat-list-item (click)="navigatetoCompany()"> 
+            <small><mat-icon>fast_forward</mat-icon></small>
+          <small>運用会社概要</small> 
+            </mat-list-item>
+          <mat-divider></mat-divider>
+          <!-- <mat-list-item  routerLink="/projects/funding-artist-list"> -->
+            <!-- <mat-list-item (click)="navigatetoArtist()">
+              <small><mat-icon>fast_forward</mat-icon></small>
+            <small>Partners</small> 
+            </mat-list-item>
+            <mat-divider></mat-divider> -->
+            <mat-list-item  (click)="navigatetoBlog()">
+                <small><mat-icon>fast_forward</mat-icon></small>
+            <small>ブログ</small>  
+                </mat-list-item>
+          <mat-divider></mat-divider>
+          
+          <!-- <mat-list-item routerLink="/profile/blank" routerLinkActive="list-item-active">
+            <mat-icon>content_paste</mat-icon>
+            Youtube & Spotify
+          </mat-list-item> -->
+        </mat-nav-list>
+      </div>
+    </mat-card>
+ </div>
+
+
+
+
+
+ <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+
+  
+ 
+
+  
+
+  <router-outlet></router-outlet>
+ </div>
+
+</div>

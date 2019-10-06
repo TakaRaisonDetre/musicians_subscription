@@ -1,0 +1,286 @@
+<mat-card class="p-0">
+  <mat-tab-group>
+    <mat-tab label="あなたの情報">
+      <mat-card-content class="mt-1">
+    <form (ngSubmit)="AddProfile()" novalidate>
+       <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+          <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+              <input
+              matInput
+              name="firstName"
+              placeholder="名"
+              [(ngModel)]="firstName">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+                <input
+                matInput
+                name="lastName"
+                type="lastName"
+                placeholder="姓"
+                [(ngModel)]="lastName">
+              </mat-form-field>
+            </div>
+
+          
+
+          <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+              <input
+              matInput
+              name="country"
+              type="country"
+              placeholder="国"
+              [(ngModel)]= "country"
+            value="">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+              <input
+              matInput
+              name="Pref_State"
+              type="Pref_State"
+              placeholder="都道府県"
+              [(ngModel)]= "Pref_State"
+            value="">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+              <input
+              matInput
+              name="city"
+              type="city"
+              placeholder="市区町村"
+              [(ngModel)]= "city"
+            value="">
+            </mat-form-field>
+            </div>
+
+            <div fxFlex="35"  class="pr-1">
+            <mat-form-field >
+              <input
+              matInput
+              name="StreetAddress"
+              type="StreetAddress"
+              placeholder="住所"
+              [(ngModel)]= "StreetAddress"
+            value="">
+            </mat-form-field>
+            </div>
+
+            <div fxFlex="35"  class="pr-1">
+              <mat-form-field >
+            
+              <input
+              matInput
+              name="contactMail"
+              type="contactMail"
+              placeholder="コンタクトメール（非公開）"
+              [(ngModel)]= "contactMail"
+            value="">
+            </mat-form-field>
+          </div>
+
+            <div fxFlex="35"  class="pr-1">
+              <mat-form-field >
+              <input
+              matInput
+              name="website"
+              type="website"
+              placeholder="ウェブサイト"
+              [(ngModel)]= "website"
+            value="">
+            </mat-form-field>
+            </div>
+
+
+             <div fxFlex="35"  class="pr-1">
+              <mat-form-field >
+              <input
+              matInput
+              name="telephone"
+              type="telephone"
+              placeholder="電話番号（非公開）"
+              [(ngModel)]= "telephone"
+            value="">
+            </mat-form-field>
+             </div>
+       </div>
+       <mat-divider></mat-divider>
+       <br>
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+             <div fxFlex="35"  class="pr-1">
+              <mat-form-field >
+                <mat-select id="langToggle" placeholder="Gender" [(ngModel)]="selectedGender"
+                type="gender" name="gender" class="mb-1">
+                  <mat-option *ngFor="let gender of genders" [value]="gender.value" ngDefaultControl>
+                    {{gender.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <p> 性別選択 : {{selectedGender}} </p>
+              </mat-form-field>
+            </div>
+  
+            <div fxFlex="35"  class="pr-1">
+              <mat-form-field >
+                <mat-select id="langToggle" placeholder="Age" [(ngModel)]="selectedGN" 
+                type="generation" name="generation" class="mb-1">
+                  <mat-option *ngFor="let generation of generations" [value]="generation.value" ngDefaultControl>
+                    {{generation.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <p> 性別 : {{selectedGN}} </p>
+              </mat-form-field>
+            </div>
+        </div>
+        
+        
+         <mat-divider></mat-divider><br>
+         <button mat-raised-button color="primary">保存</button>
+         </form>
+      </mat-card-content>
+    </mat-tab>
+
+
+
+    
+    <!-- <mat-tab label="Your Image">
+      <mat-card-content>
+        <div class="mb-1 mt-1">
+          <p><small>Please drag and drop your image 700 x 450 px</small></p>
+          <input type="file" ng2FileSelect [uploader]="uploader" />
+        </div>
+
+        <div class="mb-1">
+          <div ng2FileDrop
+          [ngClass]="{'dz-file-over': hasBaseDropZoneOver}"
+          [uploader]="uploader"
+          (fileOver)="fileOverBase($event)"
+          class="fileupload-drop-zone">
+          Drop png/jpeg file here
+          </div>
+        </div>
+        <table class="default-table mat-box-shadow" style="width: 100%">
+          <thead>
+            <tr>
+                <th width="30%">Name</th>
+                <th>Size</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="uploader.queue.length; else tableNoData">
+            <tr *ngFor="let item of uploader.queue">
+                <td>{{ item?.file?.name }}</td>
+                <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td>
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        <mat-progress-bar
+                          class=""
+                          color="primary"
+                          mode="determinate"
+                          [value]="item.progress">
+                        </mat-progress-bar>
+                    </div>
+                </td>
+                <td class="">
+                    <mat-icon *ngIf="item.isSuccess">check</mat-icon>
+                    <mat-icon *ngIf="item.isCancel" color="accent">cancel</mat-icon>
+                    <mat-icon *ngIf="item.isError" color="warn">error</mat-icon>
+                </td>
+                <td nowrap>
+                    <button 
+                    mat-raised-button
+                    class="mat-primary"
+                    (click)="item.upload()"
+                    [disabled]="item.isReady || item.isUploading || item.isSuccess">Upload</button>
+                    <button 
+                    mat-raised-button
+                    class="mat-accent"
+                    (click)="item.cancel()"
+                    [disabled]="!item.isUploading">Cancel</button>
+
+                    <button 
+                    mat-raised-button
+                    class="mat-warn"
+                    (click)="item.remove()">Remove</button>
+                </td>
+            </tr>
+            </tbody>
+            <ng-template #tableNoData>
+              <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+            </ng-template>
+        </table>
+      </mat-card-content>
+    </mat-tab> -->
+
+    
+    <mat-tab label="あなたの簡単なプロフィール">
+        <mat-card-content>
+          <br>
+            <p><small>ユーザー情報</small></p>    
+            <mat-card class="p-0">
+                <form (ngSubmit)="AddSelfDescription()">
+                    <mat-card-content class="p-0">
+                      <quill-editor 
+                      name="shortIntro"
+                      [(ngModel)]="shortIntro"
+                      theme="snow"></quill-editor>
+                    </mat-card-content>
+                    <mat-divider></mat-divider>
+                    <button mat-raised-button color="primary">保存</button>
+                  </form>
+                  </mat-card>
+                  <br>
+                      <p><small>レゾンデートルのウェブアプリを使う目的</small></p>          
+              <mat-card class="p-0">
+                  <form (ngSubmit)="AddExpectation()">
+                      <mat-card-content class="p-0">
+                        <quill-editor 
+                        name="expectation"
+                        [(ngModel)]="expectation"
+                        theme="snow"></quill-editor>
+                      </mat-card-content>
+                      <mat-divider></mat-divider>
+                      <button mat-raised-button color="primary">Save</button>
+                    </form>
+              </mat-card>
+        </mat-card-content>
+      </mat-tab>
+  
+
+
+    <mat-tab label="プライバシー設定">
+      <mat-card-content>
+        <div class="mb-1 mt-1">
+          <mat-checkbox> <small>あなたの情報を公開する</small></mat-checkbox>
+        </div>
+        <div class="mb-1">
+          <mat-checkbox> <small>あなたにフォローがついた場合の通知を受けとる</small></mat-checkbox>
+        </div>
+        <div class="mb-1">
+          <mat-checkbox> <small>メールを受け取る</small></mat-checkbox>
+        </div>
+        <!-- <div class="mb-1">
+            <p>Choose your admin panel color schemes.</p>
+            <mat-radio-group fxLayout="column" fxLayoutGap="4px">
+              <mat-radio-button value="indigo">Indigo</mat-radio-button>
+              <mat-radio-button value="blue">Blue</mat-radio-button>
+              <mat-radio-button value="pink">Pink</mat-radio-button>
+              <mat-radio-button value="purple">Purple</mat-radio-button>
+            </mat-radio-group>
+        </div> -->
+        <button mat-raised-button color="primary">保存</button>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card> 

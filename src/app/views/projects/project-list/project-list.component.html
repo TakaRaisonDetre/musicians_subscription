@@ -1,0 +1,89 @@
+
+<mat-card 
+[class.mat-elevation-z0]="!isActive" 
+    [style.border]="'none'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+class="p-0">
+<mat-tab-group>
+<mat-tab  label="メディア・アート/アートイベント/ライブイベント">
+  <br>
+    <div *ngIf="artEvent" fxLayout="row" fxLayoutWrap="wrap">
+        <div *ngFor="let art of artEvent" fxFlex="100" fxFlex.gt-xs="33">
+            <mat-card  class="p-0">
+                    <mat-card-title class="mat-bg-primary m-0">
+                       <div class="card-title-text">
+                           <span><small>{{art.project_name}}</small><br></span>
+                                    
+                           <span fxFlex></span>
+                          <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                            <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu1="matMenu">
+                                      <button (click)="navigatetoKey($event, art)" mat-menu-item>
+                                        <mat-icon>account_circle</mat-icon>
+                                        <span>Detail</span>
+                                      </button>
+                                    </mat-menu>
+                                  </div>
+                              <mat-divider></mat-divider>
+                            </mat-card-title>
+                           <img (click)="navigatetoKey($event, art)" mat-card-image [src]="art.path">
+                    <mat-card-content>
+                            <p class="customTruncatedText">
+                                        <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                        {{art.project_owner}} 
+                            </p>
+                  </mat-card-content> 
+              </mat-card>
+                       </div>
+                    </div>
+           </mat-tab>
+           <br>
+
+<mat-tab label="非営利団体関連イベント">
+            <br>
+                <div *ngIf="npo" fxLayout="row" fxLayoutWrap="wrap">
+                        <div   fxFlex="100" fxFlex.gt-xs="33">
+                              <mat-card *ngFor="let npo of npo" class="p-0">
+                                <mat-card-title class="mat-bg-primary m-0">
+                                  <div class="card-title-text">
+                                    <span><small>{{npo.project_name}}</small><br>
+                                    <small>{{npo.project_name_eg}}</small></span>
+                                    
+                                    <span fxFlex></span>
+                                    <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                                      <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu1="matMenu">
+                                      <button (click)="navigatetoKey($event, npo)" mat-menu-item>
+                                        <mat-icon>account_circle</mat-icon>
+                                        <span></span>
+                                      </button>
+                                      
+                                    </mat-menu>
+                                  </div>
+                                  <mat-divider></mat-divider>
+                                </mat-card-title>
+                                <img (click)="navigatetoKey($event, npo)" mat-card-image [src]="npo.path">
+                                <mat-card-content>
+                                  <p class="customTruncatedText">
+                                        {{npo.short_descrition}}
+                                  </p>
+                                  <!-- <mat-divider class="mb-1"></mat-divider>
+                                  <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                                  <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                                </mat-card-content> 
+                              </mat-card>
+                       </div>
+                    </div>
+        
+</mat-tab>
+
+<br>           
+</mat-tab-group>
+</mat-card>
+
+
+      
+      

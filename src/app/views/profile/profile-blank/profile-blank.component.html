@@ -1,0 +1,529 @@
+
+  <mat-card>
+    <mat-card-content>
+      <button (click)="AddNewArtist()" type="submit" mat-raised-button color="primary">
+        <mat-icon matSuffix>add_circle_outline</mat-icon>アーティストを追加</button><div fxFlex="3"></div>
+    <button *ngIf="ArtistToAdd" (click)="CancelAddNewArtist()" type="submit" mat-raised-button color="primary">
+        <mat-icon matSuffix>remove_circle_outline</mat-icon>キャンセル</button>
+    </mat-card-content>
+  </mat-card>
+     
+      
+
+<mat-card *ngIf="ArtistToAdd" class="default">
+<mat-card-title><h3>アーティストを追加</h3>
+
+</mat-card-title> 
+<mat-divider></mat-divider>
+<mat-card-content>    
+    <form (ngSubmit)="ArtistAdd()">
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+    <div fxFlex="25"  class="pr-1">
+        <mat-form-field class="form-full-width">
+              <mat-label>ミュージシャン・バンド名</mat-label>
+              <input matInput placeholder="Artist Name" [(ngModel)]="artist.artistName" name="artistName">
+              <mat-icon matSuffix>playlist_add</mat-icon>
+              <mat-hint>Artists Stage Name </mat-hint>
+        </mat-form-field>
+     
+      </div>
+   
+      <div fxFlex="25"  class="pr-1">
+            <mat-form-field class="form-full-width">
+             <mat-label>姓</mat-label>
+             <input matInput placeholder="First Name" [(ngModel)]="artist.firstName" name="firstName">
+             <mat-icon matSuffix>face</mat-icon>
+             <mat-hint>If band, a leader name</mat-hint>
+            </mat-form-field>
+            </div>
+
+      <div fxFlex="25"  class="pr-1">
+          <mat-form-field class="form-full-width">
+            <mat-label>名</mat-label>
+            <input matInput placeholder="Last Name" [(ngModel)]="artist.lastName" name="lastName">
+            <mat-icon matSuffix>face</mat-icon>
+            <mat-hint>If band, a leader name</mat-hint>
+          </mat-form-field>        
+      </div>
+
+       <div fxFlex="25"  class="pr-1">
+          <mat-form-field class="form-full-width">
+            <mat-label>マネージメント会社（無ければバンド名）</mat-label>
+            <input matInput placeholder="label / managed firms" [(ngModel)]="artist.labelName" name="labelName">
+            <mat-icon matSuffix>how_to_reg</mat-icon>
+            <mat-hint>label or management company name</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+       <div fxFlex="25"  class="pr-1">
+          <mat-form-field class="form-full-width">
+            <mat-label>facebook URL</mat-label>
+            <input matInput placeholder="facebookpage" [(ngModel)]="artist.facebookpage" name="facebookpage">
+            <mat-icon matSuffix>share</mat-icon>
+            <mat-hint> facebook page full URL</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+       <div fxFlex="25"  class="pr-1">
+          <mat-form-field class="form-full-width">
+            <mat-label>twitter URL</mat-label>
+            <input matInput placeholder="twitter" [(ngModel)]="artist.twitterpage" name="twitterpage">
+            <mat-icon matSuffix>share</mat-icon>
+            <mat-hint> twitter page full URL</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+       <div fxFlex="25"  class="pr-1">
+          <mat-form-field class="form-full-width">
+            <mat-label>ウェブサイト</mat-label>
+            <input matInput placeholder="website" [(ngModel)]="artist.website" name="website">
+            <mat-icon matSuffix>web</mat-icon>
+            <mat-hint> website</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+      
+       <div fxFlex="100"  class="pr-1">
+         <br>
+         <mat-divider></mat-divider>
+         <mat-card-title><h5>簡単なバイオグラフィー（英語）</h5></mat-card-title>
+       <mat-card-content class="p-0">
+          <quill-editor 
+          [(ngModel)]="artist.short_description_en" 
+          name="short_description_en"
+          theme="snow"></quill-editor>
+        </mat-card-content>
+       </div>
+       <div fxFlex="100"  class="pr-1">
+          <br>
+          <mat-divider></mat-divider>
+          <mat-card-title><h5>簡単なバイオグラフィー（日本語）</h5></mat-card-title>
+        <mat-card-content class="p-0">
+           <quill-editor 
+           [(ngModel)]="artist.short_description_jp" 
+           name="short_description_jp"
+           theme="snow"></quill-editor>
+         </mat-card-content>
+        </div>
+    </div>
+    <button type="submit" mat-raised-button color="primary">登録する</button>
+    </form>
+</mat-card-content>
+</mat-card>
+
+<br>
+<mat-expansion-panel *ngFor="let art of artists">
+    <mat-expansion-panel-header (click)="editArtist($event, art)">
+        <mat-panel-title>
+            <img [src]="art.path" class="artistImage" alt="">
+        </mat-panel-title>
+      <mat-panel-title>
+       <small>{{art.artistName | excerpt:5 }}</small>   
+      </mat-panel-title>
+      <mat-panel-description>
+        <small>{{art.firstName}} {{ art.lastName | excerpt:5 }}</small>  
+      </mat-panel-description>
+    
+</mat-expansion-panel-header>
+  
+    <!--////// editing screen starts /////////-->
+<mat-card *ngIf="editState && artistToEdit.id == art.id" class="default">
+    <mat-card-title>
+   管理しているアーティスト情報の情報追加
+    </mat-card-title> <mat-divider></mat-divider>
+    <mat-tab-group>
+       
+    <mat-tab label="User Info">
+    <mat-card-content>
+ 
+      <button (click)="OpenImageUploadModal($event, art.artistName)" mat-stroked-button mat-button color="primary">
+        <mat-icon matSuffix>cloud_upload</mat-icon>
+          <small>   アーティスト・イメージ追加</small>
+      </button><br><br>
+
+
+      <!-- <div style="background-color:lightslategrey"  class="mb-1">
+               <div class="fileupload-drop-zone">
+                 <div class="dropzone"
+                 dropZone
+                (hovered)="toggleHover($event)"
+                (dropped)="startUpload($event, art.artistName)"
+               [class.hovering]="isHovering">
+    
+                  <mat-icon>cloud_upload</mat-icon><br>
+                  <small>ドラック＆ドロップ (700px & 450px)</small>
+                       <div class="file">
+                      <label class="file-label">        
+                      <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+                        <span class="file-cta">
+                          <span class="file-icon">
+                              <mat-icon matSuffix>playlist_add</mat-icon>
+                          </span> 
+                          <span class="file-label">
+                            もしくはファイルを洗濯
+                          </span> 
+                        </span>
+                      </label>
+                    </div>
+                </div>
+               </div>
+              
+        </div>
+    
+        <div *ngIf="percentage | async as pct">
+    
+            <progress class="progress is-info" 
+                      [value]="pct" 
+                      max="100">        
+            </progress>
+          
+            {{ pct | number }}%
+          
+          </div>
+              
+          <div *ngIf="snapshot | async as snap">
+            {{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }} 
+          
+             <div *ngIf="downloadURL | async as url">
+              <h3>アップロード結果!</h3>
+              <img [src]="url"><br>
+               
+              <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+            </div>  
+          
+            <button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">ポーズ</button>
+            <button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">キャンセル</button>
+            <button (click)="task.resume()" class="button is-info"   [disabled]="!(snap?.state === 'paused')">リズーム</button>
+          
+          </div> -->
+
+
+          
+    <!--edit artist information  -->
+  <form (ngSubmit)="ArtistUpdate(art)">  
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+        <!-- <div fxFlex="25"  class="pr-1">
+            <mat-form-field appearance="outline">
+                  <mat-label>Artists/band/unit Name</mat-label>
+                  <input matInput placeholder="Artist Name" [(ngModel)]="art.artistName" name="artistName" (mouseon)="disabled=true">
+                  <mat-icon matSuffix>playlist_add</mat-icon>
+                  <mat-hint>Artists Name on Spotify</mat-hint>
+            </mat-form-field>
+         
+          </div> -->
+          
+          
+          <div fxFlex="100"  class="pr-1">
+            <br><br>
+            <br>
+          <div fxFlex="35"  class="pr-1">
+          <mat-slide-toggle matInput color="primary" [(ngModel)]="art.isOpen" name="isOpen">
+           情報を一般公開する
+          </mat-slide-toggle>
+          </div>
+          <div fxFlex="35"  class="pr-1">
+          <mat-slide-toggle matInput color="primary" (click)="AddCrowdFundingState()" class="left" [(ngModel)]="art.isFunding" name="isFunding">
+           単発のクラファンを開始
+          </mat-slide-toggle>
+        </div>
+        <div fxFlex="35"  class="pr-1">
+          <mat-slide-toggle matInput color="primary" (click)="AddCrowdFundingState()" class="left" [(ngModel)]="art.isMonthlySubscribed" name="isMonthlySubscribed">
+          月額のファンクラブを開始
+          </mat-slide-toggle>
+        </div>
+        <br><br>
+          <br>
+         
+         
+          </div>
+          
+          
+          
+          <div fxFlex="25"   class="pr-1">
+                <mat-form-field class="form-full-width">
+                 <mat-label>代表者（名）</mat-label>
+                 <input matInput placeholder="First Name" [(ngModel)]="art.firstName" name="firstName">
+                 <mat-icon matSuffix>face</mat-icon>
+                 <mat-hint>If band, a leader name</mat-hint>
+                </mat-form-field>
+                </div>
+          <div fxFlex="25"   class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>代表者（姓）</mat-label>
+                <input matInput placeholder="Last Name" [(ngModel)]="art.lastName" name="lastName">
+                <mat-icon matSuffix>face</mat-icon>
+                <mat-hint>If band, a leader name</mat-hint>
+              </mat-form-field>        
+          </div>
+           <div fxFlex="25"   class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>レーベル・もしくはマネージメント</mat-label>
+                <input matInput placeholder="Label or Managed firm" [(ngModel)]="art.labelName" name="labelName">
+                <mat-icon matSuffix>how_to_reg</mat-icon>
+                <mat-hint>label or management company name</mat-hint>
+              </mat-form-field>            
+           </div>
+           <div fxFlex="25"  class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>facebook URL</mat-label>
+                <input matInput placeholder="facebookpage" [(ngModel)]="art.facebookpage" name="facebookpage">
+                <mat-icon matSuffix>share</mat-icon>
+                <mat-hint> facebook page full URL</mat-hint>
+              </mat-form-field>         
+           </div>
+           <div fxFlex="25"  class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>twitter URL</mat-label>
+                <input matInput placeholder="twitter" [(ngModel)]="art.twitterpage" name="twitterpage">
+                <mat-icon matSuffix>share</mat-icon>
+                <mat-hint> twitter page full URL</mat-hint>
+              </mat-form-field>         
+           </div>
+           <div fxFlex="25"  class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>website</mat-label>
+                <input matInput placeholder="website" [(ngModel)]="art.website" name="website">
+                <mat-icon matSuffix>web</mat-icon>
+                <mat-hint> website</mat-hint>
+              </mat-form-field>    <br><br>  
+             <mat-divider></mat-divider><br>    
+           </div>
+         
+         
+<!-- Video List -->
+          <div fxFlex="100"  class="pr-1">
+            <div fxFlex="25"  class="pr-1">
+              <mat-form-field class="form-full-width">
+                <mat-label>Youtube チャンネル名</mat-label>
+                <input matInput placeholder="Haru Nemuri Channel" [(ngModel)]="art.videoquery" name="videoquery">
+                <mat-icon matSuffix>videocam</mat-icon>
+                <mat-hint>Youtube channel unique name </mat-hint>
+              </mat-form-field>         
+           </div>
+           <div fxFlex="25"  class="pr-1">
+            <mat-form-field class="form-full-width">
+              <mat-label>ターゲット（金額）</mat-label>
+              <input matInput placeholder="Japanese Yen" [(ngModel)]="art.artist_patron_target_amount" name="artist_patron_target_amount">
+              <mat-icon matSuffix>videocam</mat-icon>
+              <mat-hint> Amount you want to acquire</mat-hint>
+            </mat-form-field>         
+         </div>
+       
+
+          </div>
+
+
+           <div fxFlex="100"  class="pr-1">
+             <br>
+             <mat-divider></mat-divider>
+             <mat-card-title>バイオグラフィー（英語）</mat-card-title>
+           <mat-card-content class="p-0">
+              <quill-editor 
+              [(ngModel)]="art.short_description_en" 
+              name="short_description_en"
+              theme="snow"></quill-editor>
+            </mat-card-content>
+           </div>
+           <div fxFlex="100"  class="pr-1">
+              <br>
+              <mat-divider></mat-divider>
+              <mat-card-title>バイオグラフィー（日本語）</mat-card-title>
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="art.short_description_jp" 
+               name="short_description_jp"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+
+
+<mat-tab-group *ngIf="funding_status">     
+<mat-tab label="Crowd Funding Objective">
+
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+        <div fxFlex="50"  class="pr-1">
+         
+          <mat-card>
+          <mat-card-title>クラファンの目的（英語）</mat-card-title>
+          <mat-card-content class="p-0">
+             <quill-editor 
+             [(ngModel)]="art.objective" 
+             name="objective"
+             theme="snow"></quill-editor>
+           </mat-card-content>
+          </mat-card>
+          </div>
+
+          <div fxFlex="50"  class="pr-1">
+              <mat-card>
+            <mat-card-title>クラファンの目的　(日本語）</mat-card-title>
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="art.objective_jp" 
+               name="objective_jp"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </mat-card>
+            </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>  
+
+<mat-tab-group *ngIf="funding_status">     
+  <mat-tab label="Bronze Rewards">  
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+  
+            <div fxFlex="50"  class="pr-1">
+                <mat-card>
+                <mat-card-title>ブロンズ・パトロンへのリワード(英語）</mat-card-title>
+                <mat-card-content class="p-0">
+                   <quill-editor 
+                   [(ngModel)]="art.bronze_reward" 
+                   name="bronze_reward"
+                   theme="snow"></quill-editor>
+                 </mat-card-content>
+                </mat-card>
+                </div>
+
+     <div fxFlex="50"  class="pr-1">
+        <mat-card>
+            <mat-card-title>ブロンズ・パトロンへのリワード(日本語）</mat-card-title>
+              <mat-card-content class="p-0">
+                <quill-editor 
+                       [(ngModel)]="art.bronze_reward_jp" 
+                       name="bronze_reward_jp"
+                       theme="snow">
+                </quill-editor>
+            </mat-card-content>
+          </mat-card>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group> 
+
+<mat-tab-group *ngIf="funding_status">     
+    <mat-tab label="Silver Rewards">  
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+  
+        <div fxFlex="50"  class="pr-1">
+            <mat-card>
+            <mat-card-title>シルバー・パトロンへのリワード(英語）</mat-card-title>
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="art.silver_reward" 
+               name="silver_reward"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </mat-card>
+            </div>
+
+ <div fxFlex="50"  class="pr-1">
+    <mat-card>
+        <mat-card-title>シルバー・パトロンへのリワード(日本語）</mat-card-title>
+          <mat-card-content class="p-0">
+            <quill-editor 
+                   [(ngModel)]="art.silver_reward_jp" 
+                   name="silver_reward_jp"
+                   theme="snow">
+            </quill-editor>
+        </mat-card-content>
+      </mat-card>
+  </div>
+</div>
+</mat-tab>
+</mat-tab-group> 
+<mat-tab-group *ngIf="funding_status">     
+    <mat-tab label="Gold Rewards">  
+
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+  
+    <div fxFlex="50"  class="pr-1">
+        <mat-card>
+        <mat-card-title>ゴールド・パトロンへのリワード(英語）</mat-card-title>
+        <mat-card-content class="p-0">
+           <quill-editor 
+           [(ngModel)]="art.gold_reward" 
+           name="gold_reward"
+           theme="snow"></quill-editor>
+         </mat-card-content>
+        </mat-card>
+        </div>
+
+<div fxFlex="50"  class="pr-1">
+<mat-card>
+    <mat-card-title>ゴールド・パトロンへのリワード(日本語）</mat-card-title>
+      <mat-card-content class="p-0">
+        <quill-editor 
+               [(ngModel)]="art.gold_reward_jp" 
+               name="gold_reward_jp"
+               theme="snow">
+        </quill-editor>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>
+</mat-tab>
+</mat-tab-group> 
+     
+
+        </div>
+        <br><mat-divider></mat-divider><br>
+        <button type="submit" mat-raised-button color="primary">情報を追加</button>
+        </form>
+    </mat-card-content>
+    </mat-tab>
+    <!-- follower Tab -->
+    <mat-tab label="Follower Lists">
+      <div *ngIf="Artist$ | async as Artist">
+
+     <!-- Aggregated followers on the post document -->
+     <ng-container >
+     <mat-list *ngFor="let follower of Artist.recentFollowers" class="compact-list mb-1">
+        <mat-list-item class="" (click)="navigateToUser($event, follower.userId)">
+           <img mat-list-avatar class="mr-1" [src]="follower.photoURL" alt=""> 
+        <div fxLayout="row" fxFlex="100"> 
+            <h6 class="m-0 mr-1"><small>{{follower.displayName}}</small></h6>
+            <!-- <span fxFlex></span> -->
+            <mat-divider></mat-divider>
+            <!-- <small class="text-muted mr-1 ml-1"></small> -->
+          
+          </div>
+           <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+        </mat-list-item>
+      </mat-list>
+     </ng-container>
+
+      </div>
+
+    </mat-tab>
+
+    <!-- Supporter and Donor tab-->
+    <mat-tab label="Donars/Fans Lists">
+
+      <div *ngIf="Artist$ | async as Artist">
+
+        <!-- Aggregated followers on the post document -->
+        <ng-container >
+        <mat-list  class="compact-list mb-1">
+           <mat-list-item *ngFor="let donors of Artist.recentDonors" class="" (click)="navigateToUser($event, donors.userId)">
+              <img mat-list-avatar class="mr-1" [src]="donors.photoURL" alt=""> 
+           <div fxLayout="row" fxFlex="250"> 
+               <h6 class="m-0 mr-1"><small>{{donors.displayName}}</small></h6>
+              
+               <!-- <span fxFlex></span> -->
+               <mat-divider></mat-divider>
+               <span class="text-muted mr-1 ml-1">{{donors.createdAt.seconds * 1000 | date:'MM-dd-yyyy' }}</span> 
+           <span class="text-muted mr-1 ml-1">{{donors.donation | currency : 'JPY'}}</span> 
+           <span class="text-muted mr-1 ml-1">{{donors.payment_status}}</span> 
+             </div>
+              <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+           </mat-list-item>
+         </mat-list>
+        </ng-container>
+         </div>    
+    </mat-tab>
+    </mat-tab-group>
+    </mat-card>
+<!-- editing screen ends  -->
+  
+  </mat-expansion-panel>

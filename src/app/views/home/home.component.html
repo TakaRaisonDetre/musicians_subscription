@@ -1,0 +1,65 @@
+<!-- <div class="scrollable">
+  <section style="background-color:whitesmoke" class="home-section section-intro text-center">
+    <div class="container">
+        <img src="assets/images/logo-drop-shadow.png" alt="">
+        <img src="assets/images/5-star.png" alt="">
+        <h1>Angular 5+ Material Design Admin Template</h1>
+        <p class="text-muted">Quick start your project within <strong>5 minutes</strong>. 
+          Seed projects for both top and side navigation are included.</p>
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+          <button mat-raised-button mat-lg-button  color="warn" (click)="goToMainDash()">Main Dashboard</button>
+          <span fxFlex="8px"></span>
+          <a href="https://themeforest.net/item/egret-angular-4-material-design-admin-template/20161805?ref=mh_rafi" target="_blank">
+            <button mat-raised-button mat-lg-button color="warn">Buy Egret</button>
+          </a> 
+        </div>
+    </div>
+  </section>
+  <section style="background-color:black" id="demos" class="home-section section-demos">
+    <div class="container">
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+        <div fxFlex="50" *ngFor="let v of versions"> 
+          <div class="p-1 text-center demo-box">
+            <h3>{{v.name}}</h3>
+            <div (click)="goToDashboard(v)" class="p-0 mat-elevation-z12 screenshot">
+              <img [src]="v.photo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div> -->
+
+<section style="background-color:#313131" class="home-section section-intro text-center">
+  <!-- <section style="background-color:#247ba0" class="home-section section-intro text-center"> -->
+    <div class="container">
+        <img src="assets/images/logo_new-2.png" width=20% alt="">
+         <!-- <img src="assets/images/5-star.png" alt=""> -->
+        <h1>For Your Music Fans in Japan</h1>
+        <p class="text-muted">あなたの音楽プロジェクトを <strong>5 分</strong>で作成、ファンを集めたり、PRしてクラファンを始められます。
+        海外公演を果たしたり、プロのサウンドプロデユーサーとコラボしたり、あなたの音楽ライフの可能性が広がります。</p>
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+          <button mat-raised-button mat-lg-button  color="warn" (click)="goToMainDash()">Start </button>
+          <span fxFlex="8px"></span>
+          <!-- <a href="https://themeforest.net/item/egret-angular-4-material-design-admin-template/20161805?ref=mh_rafi" target="_blank">
+            <button mat-raised-button mat-lg-button color="warn">Buy Egret</button>
+          </a> -->
+        </div>
+    </div>
+  </section>
+  <section style="background-color:rgb(99, 98, 98)" id="demos" class="home-section section-demos">
+    <div class="container">
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+        <div fxFlex="50" *ngFor="let v of versions"> 
+          <div class="p-1 text-center demo-box">
+            <h3>{{v.name}}</h3>
+            <!-- <div (click)="goToDashboard(v)" class="p-0 mat-elevation-z12 screenshot"> -->
+                <div  class="p-0 mat-elevation-z12 screenshot">
+              <img [src]="v.photo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

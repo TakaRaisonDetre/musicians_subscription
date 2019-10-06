@@ -1,0 +1,614 @@
+
+  <mat-card>
+    <mat-card-content>
+      <button (click)="AddNewProject()" type="submit" mat-raised-button color="primary">
+        <mat-icon matSuffix>add_circle_outline</mat-icon> プロジェクト案・もしくはイベント案を追加</button> <div fxFlex="5"></div>
+    <button *ngIf="AddProjectState" (click)="CancelAddNewProject()" type="submit" mat-raised-button color="primary">
+        <mat-icon matSuffix>remove_circle_outline</mat-icon>キャンセル</button>
+  
+    </mat-card-content>
+  </mat-card>
+     
+
+
+  <!-- Add Project  -->
+<mat-card *ngIf="AddProjectState" class="default">
+  <mat-card-title>
+  プロジェクト案・もしくはイベント案を追加
+  </mat-card-title> 
+  <mat-divider></mat-divider>
+  <mat-card-content>    
+      <form (submit)="ProjectAdd()">
+      <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+      <div fxFlex="25"  class="pr-1">
+          <mat-form-field appearance="outline">
+                <mat-label>プロジェクトネーム</mat-label>
+                <input matInput placeholder="Project" [(ngModel)]="project.project_name" name="project_name">
+                <mat-icon matSuffix>playlist_add</mat-icon>
+                <mat-hint>Clear Catchy Project Name</mat-hint>
+          </mat-form-field>
+       
+        </div>
+     
+     
+          <!-- <div fxFlex="25"  class="pr-1">
+          <mat-form-field appearance="outline">
+            <mat-select placeholder="{{'PROFILE-COMPONENT.PROJECT_TYPE' | translate}}"
+            [(ngModel)]="selectedType"
+            type="type" name="type" >
+              <mat-select *ngFor="let type of projectType" [value]="type.value" name="type" ngDefaultControl>
+               {{type.viewValue}}
+              </mat-select>
+            </mat-select>
+          </mat-form-field>
+        </div>  -->
+
+        <div fxFlex="25"  class="pr-1">
+          <mat-form-field appearance="outline">
+            <mat-select id="langToggle" placeholder="タイプ" [(ngModel)]="project.type"
+            type="Type" name="Type" class="mb-1">
+              <mat-option *ngFor="let type of projectType" [value]="type.value" ngDefaultControl>
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+            <p> 選択したタイプ : {{type}} </p>
+          </mat-form-field>
+        </div>
+
+         <div fxFlex="25"  class="pr-1">
+            <mat-form-field appearance="outline">
+              <mat-label>プロジェクト・オーナー</mat-label>
+              <input matInput placeholder="Project Owner Name" [(ngModel)]="project.project_owner" name="project_owner">
+              <mat-icon matSuffix>how_to_reg</mat-icon>
+              <mat-hint>A person who in charge of</mat-hint>
+            </mat-form-field>
+                    
+         </div>
+
+         <div fxFlex="25"  class="pr-1">
+          <mat-form-field appearance="outline">
+            <mat-label>ターゲット額（円）</mat-label>
+            <input matInput placeholder="Target Monthly (or Total) Amount" [(ngModel)]="project.target_amount" name="project_owner">
+            <mat-icon matSuffix>attach_money</mat-icon>
+            <mat-hint>Target revenue raised in Yen</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+      
+  
+
+         <br><br>
+         <mat-tab-group>
+          <mat-tab label="プロジェクト概略（英語）">
+            <div fxFlex="100"  class="pr-1">
+              <br>
+              
+              
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.short_description_en" 
+               name="short_description_en"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+          </mat-tab>
+
+
+           <mat-tab label="プロジェクト概略（日本語）">
+
+            <div fxFlex="100"  class="pr-1">
+              <br>
+             
+             
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.short_description_jp" 
+               name="short_description_jp"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+            </mat-tab>
+
+         </mat-tab-group>
+
+         <mat-tab-group>
+          <mat-tab label="プロジェクト詳細内容（英語）">
+            <div fxFlex="100"  class="pr-1">
+              <br>
+            
+              
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.long_description_en" 
+               name="long_description_en"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+          </mat-tab>
+           <mat-tab label="プロジェクト詳細内容（日本語）">
+
+            <div fxFlex="100"  class="pr-1">
+              <br>
+              
+             
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.long_description_jp" 
+               name="long_description_jp"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+            </mat-tab>
+
+         </mat-tab-group>
+        
+         <mat-tab-group>
+          <mat-tab label="プロジェクト目的：何を成し遂げたいか（英語）">
+            <div fxFlex="100"  class="pr-1">
+              <br>
+            
+              
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.objective_en" 
+               name="objective_en"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+          </mat-tab>
+           <mat-tab label="プロジェクト目的：何を成し遂げたいか（日本語）">
+
+            <div fxFlex="100"  class="pr-1">
+              <br>
+              
+             
+            <mat-card-content class="p-0">
+               <quill-editor 
+               [(ngModel)]="project.objective_jp" 
+               name="objective_ja"
+               theme="snow"></quill-editor>
+             </mat-card-content>
+            </div>
+            </mat-tab>
+
+         </mat-tab-group>
+     
+     
+     
+     
+     
+        </div>
+      <button type="submit" mat-raised-button color="primary">プロジェクト情報を保存</button>
+      </form>
+  </mat-card-content>
+</mat-card>
+
+<br>
+<!-- list of projects -->
+<mat-expansion-panel *ngFor="let proj of proj">
+  <mat-expansion-panel-header (click)="editProject($event, proj)">
+      <mat-panel-title>
+          <img [src]="proj.path" class="projectImage" alt="">
+      </mat-panel-title>
+    <mat-panel-title>
+        {{ proj.project_name }}
+    </mat-panel-title>
+    <mat-panel-description>
+        {{ proj.project_owner }}
+    </mat-panel-description>
+    
+</mat-expansion-panel-header>
+
+
+
+   <!--////// editing screen starts /////////-->
+   <mat-card *ngIf="editProjectState && projectToEdit.id == proj.id" class="default">
+    <mat-card-title>
+     Edit Project Info
+    </mat-card-title> <mat-divider></mat-divider>
+    <mat-tab-group>
+       
+    <mat-tab label="Basic Infomation">
+    <mat-card-content>
+ 
+
+      <div style="background-color:lightslategrey; height:200px"  class="mb-1">
+               <div class="fileupload-drop-zone" style="background-color:lightslategrey; height:200px" >
+                 <div class="dropzone"
+                 dropZone
+                (hovered)="toggleHover($event)"
+                (dropped)="startUpload($event, proj.project_name)"
+               [class.hovering]="isHovering">
+    
+                  <mat-icon>cloud_upload</mat-icon><br>
+                  <small>Drag & drop area (700px & 450)</small>
+                       <div class="file">
+                      <label class="file-label">        
+                      <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+                        <span class="file-cta">
+                          <span class="file-icon">
+                              <mat-icon matSuffix>playlist_add</mat-icon>
+                          </span> 
+                          <span class="file-label">
+                            or choose a file…
+                          </span> 
+                          
+                        </span>
+                      </label>
+                    </div>
+                    
+    
+    
+                </div>
+               </div>
+              
+        </div>
+    
+        <div *ngIf="percentage | async as pct">
+    
+            <progress class="progress is-info" 
+                      [value]="pct" 
+                      max="100">        
+            </progress>
+          
+            {{ pct | number }}%
+          
+          </div>
+              
+          <div *ngIf="snapshot | async as snap">
+            {{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }} 
+          
+             <div *ngIf="downloadURL | async as url">
+              <h3>Results!</h3>
+              <img [src]="url"><br>
+               
+              <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+            </div>  
+          
+            <button (click)="task.pause()" class="button is-warning" [disabled]="!isActive(snap)">Pause</button>
+            <button (click)="task.cancel()" class="button is-danger" [disabled]="!isActive(snap)">Cancel</button>
+            <button (click)="task.resume()" class="button is-info"   [disabled]="!(snap?.state === 'paused')">Resume</button>
+          
+          </div>
+    
+  <form (ngSubmit)="ProjectUpdate(proj)">  
+     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+        
+        <div fxFlex="25"  class="pr-1">
+
+            <mat-slide-toggle matInput color="primary" [(ngModel)]="proj.isOpen" name="isOpen">
+                Publish your informartion 
+            </mat-slide-toggle>
+         
+
+        </div>
+        
+        <div fxFlex="50"  class="pr-1">
+
+            <mat-slide-toggle matInput color="primary" [(ngModel)]="proj.status" name="status">
+                Is this Dunamise (check) Energeia (uncheck)
+            </mat-slide-toggle>
+         
+          
+        </div>
+
+        <div fxFlex="25"  class="pr-1"></div>
+         <br><br><br>
+          <div fxFlex="25"  class="pr-1">
+            <mat-form-field >
+              <mat-select id="langToggle" placeholder="Type" [(ngModel)]="proj.type"
+              type="Type" name="Type" class="mb-1">
+                <mat-option *ngFor="let type of projectType" [value]="type.value" ngDefaultControl>
+                  {{type.viewValue}}
+                </mat-option>
+              </mat-select>
+              <p> Selected : {{type}} </p>
+            </mat-form-field>
+          </div>
+  
+           <div fxFlex="25"  class="pr-1">
+              <mat-form-field appearance="outline">
+                <mat-label>Project Owner</mat-label>
+                <input matInput placeholder="Project Owner" [(ngModel)]="proj.project_owner" name="project_owner">
+                <mat-icon matSuffix>how_to_reg</mat-icon>
+                <mat-hint>A person who in charge of</mat-hint>
+              </mat-form-field>
+                      
+           </div>
+  
+           <div fxFlex="25"  class="pr-1">
+            <mat-form-field appearance="outline">
+              <mat-label>Target Amount JPY</mat-label>
+              <input matInput placeholder="Project Target Amount to Raise" [(ngModel)]="proj.target_amount" name="target_amount">
+              <mat-icon matSuffix>attach_money</mat-icon>
+              <mat-hint>Monthly target revenue raised in Yen</mat-hint>
+            </mat-form-field>
+                    
+         </div>
+
+         <div fxFlex="25"  class="pr-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Venue</mat-label>
+            <input matInput placeholder="Event Venue" [(ngModel)]="proj.venue" name="venue">
+            <mat-icon matSuffix>store</mat-icon>
+            <mat-hint>Event Venue</mat-hint>
+          </mat-form-field>
+                  
+       </div>
+       <div fxFlex="25"  class="pr-1">
+       <mat-form-field>
+        <input matInput [matDatepicker]="From" [ngModelOptions]="{standalone: true}" 
+        (dateChange)="onValueChange($event)" [(ngModel)]="proj.date" placeholder="From">
+        <mat-datepicker-toggle matSuffix [for]="From"></mat-datepicker-toggle>
+        <mat-datepicker #From></mat-datepicker>
+      </mat-form-field>
+       </div>
+
+      <div fxFlex="25"  class="pr-1">
+      <mat-form-field appearance="outline">
+        <mat-label>Time</mat-label>
+        <input matInput placeholder="time" [(ngModel)]="proj.start_at" name="start_at">
+        <mat-icon matSuffix>av_timer</mat-icon>
+        <mat-hint>Start from</mat-hint>
+      </mat-form-field>
+              
+   </div>
+
+   <div fxFlex="25"  class="pr-1">
+      <mat-form-field appearance="outline">
+        <mat-label>Ticket Price</mat-label>
+        <input matInput placeholder="Event Ticket Price" [(ngModel)]="proj.ticketprice" name="ticketprice">
+        <mat-icon matSuffix>attach_money</mat-icon>
+        <mat-hint>Event Ticket Price</mat-hint>
+      </mat-form-field>
+              
+   </div>
+  
+           <br><br>
+           <mat-divider></mat-divider>
+           <mat-tab-group>
+            <mat-tab label="Summary of Project">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.short_description_en" 
+                 name="short_description_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+  
+  
+             <mat-tab label="Summary of Project in Japanese">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+               
+               
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.short_description_jp" 
+                 name="short_description_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+  
+           </mat-tab-group>
+  
+           <mat-tab-group>
+            <mat-tab label="Detail Description ">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+              
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.long_description_en" 
+                 name="long_description_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+             <mat-tab label="Detail Description in Japanese">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+               
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.long_description_jp" 
+                 name="long_description_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+  
+           </mat-tab-group>
+          
+           <mat-tab-group>
+            <mat-tab label="Objective : What you want to achieve">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+              
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.objective_en" 
+                 name="objective_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+             <mat-tab label="Objective in Japanese: What you want to achieve">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.objective_jp" 
+                 name="objective_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+           </mat-tab-group>
+
+           <mat-tab-group>
+            <mat-tab label="Bronze Reward">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+              
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_bronze_en" 
+                 name="reward_bronze_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+             <mat-tab label="Bronze Reward in Japanese">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_bronze_jp" 
+                 name="reward_bronze_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+           </mat-tab-group>
+
+           <mat-tab-group>
+            <mat-tab label="Silver Reward">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+              
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_silver_en" 
+                 name="reward_silver_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+             <mat-tab label="Silver Rewards in Japanese">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_silver_jp" 
+                 name="reward_silver_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+           </mat-tab-group>
+
+           <mat-tab-group>
+            <mat-tab label="Gold Rewards ">
+              <div fxFlex="100"  class="pr-1">
+                <br>
+              
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_gold_en" 
+                 name="reward_gold_en"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+            </mat-tab>
+             <mat-tab label="Gold Rewards in Japanese">
+  
+              <div fxFlex="100"  class="pr-1">
+                <br>
+                
+              <mat-card-content class="p-0">
+                 <quill-editor 
+                 [(ngModel)]="proj.reward_gold_jp" 
+                 name="reward_gold_jp"
+                 theme="snow"></quill-editor>
+               </mat-card-content>
+              </div>
+              </mat-tab>
+           </mat-tab-group>
+    
+     </div>
+        <button type="submit" mat-raised-button color="primary">Edit Project Info</button>
+        </form>
+    </mat-card-content>
+    </mat-tab>
+    
+    <mat-tab label="Follower List">
+        <div *ngIf="Project$ | async as Project">
+
+            <!-- Aggregated followers on the post document -->
+            <ng-container >
+            <mat-list *ngFor="let follower of Project.recentFollowers" class="compact-list mb-1">
+               <mat-list-item class="" (click)="navigateToUser($event, follower.userId)">
+                  <img mat-list-avatar class="mr-1" [src]="follower.photoURL" alt=""> 
+               <div fxLayout="row" fxFlex="100"> 
+                   <h6 class="m-0 mr-1"><small>{{follower.displayName}}</small></h6>
+                   <!-- <span fxFlex></span> -->
+                   <mat-divider></mat-divider>
+                   <!-- <small class="text-muted mr-1 ml-1"></small> -->
+                 
+                 </div>
+                  <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+               </mat-list-item>
+             </mat-list>
+            </ng-container>
+       
+             </div>
+
+
+
+
+    
+    </mat-tab>
+
+   <mat-tab label="Donors List">
+
+    <div *ngIf="Project$ | async as Project">
+
+      <!-- Aggregated followers on the post document -->
+      <ng-container >
+      <mat-list *ngFor="let donors of Project.recentDonors" class="compact-list mb-1">
+         <mat-list-item class="" (click)="navigateToUser($event, donors.userId)">
+            <img mat-list-avatar class="mr-1" [src]="donors.photoURL" alt=""> 
+         <div fxLayout="row" fxFlex="100"> 
+             <h6 class="m-0 mr-1"><small>{{donors.displayName}}</small></h6>
+             <h6 class="m-0 mr-1"><small>{{donors.createdAt.seconds * 1000 | date:'MM-dd-yyyy' }}</small></h6>
+             <!-- <span fxFlex></span> -->
+             <mat-divider></mat-divider>
+         <span class="text-muted mr-1 ml-1">{{donors.donation | currency : 'JPY'}}</span> 
+           
+           </div>
+            <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+         </mat-list-item>
+       </mat-list>
+      </ng-container>
+ 
+       </div>
+
+
+
+
+   </mat-tab>
+
+
+    
+    </mat-tab-group>
+    </mat-card>
+<!-- editing screen ends  -->
+  
+  </mat-expansion-panel>

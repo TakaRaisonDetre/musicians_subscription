@@ -1,0 +1,162 @@
+<mat-card 
+[class.mat-elevation-z0]="!isActive" 
+    [style.border]="'none'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+class="p-0">
+
+    <mat-tab-group>
+      <mat-tab label="注目アーティスト"> 
+       
+        <div *ngIf="artists" fxFlex="100" fxLayoutWrap="wrap">
+          <div *ngFor="let art of artists" fxFlex="100" fxFlex.gt-xs="25">
+              <br>
+            <mat-card  class="p-0">
+                  <mat-card-title class="mat-bg-primary m-0">
+                     <div class="card-title-text">
+                         <span><small>{{art.artistName}}</small><br></span>
+                                  
+                         <span fxFlex></span>
+                        <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                          <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu1="matMenu">
+                                    <button (click)="navigateToKey($event, art)" mat-menu-item>
+                                      <mat-icon>account_circle</mat-icon>
+                                      <span>Detail</span>
+                                    </button>
+                                     <!-- <button mat-menu-item>
+                                      <mat-icon>notifications_off</mat-icon>
+                                      <span>Disable alerts</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>close</mat-icon>
+                                        <span>Remove panel</span>
+                                    </button>  -->
+                                  </mat-menu>
+                                </div>
+                            <mat-divider></mat-divider>
+                           </mat-card-title>
+                         <img (click)="navigateToKey($event, art)" mat-card-image [src]="art.path">
+                         <!-- <img mat-card-image [src]="artistUrl | async"/> -->
+                              <mat-card-content>
+                                <p class="customTruncatedText">
+                                      <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                      {{art.labelName}} 
+                                </p>
+                                <!-- <mat-divider class="mb-1"></mat-divider>
+                                <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                                <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                              </mat-card-content> 
+          </mat-card>
+        </div>
+        </div>
+     
+
+
+      </mat-tab>
+      <mat-tab label="クラウドファンディング・アーティスト"> 
+
+          <div *ngIf="artists" fxFlex="100" fxLayoutWrap="wrap">
+              <div *ngFor="let art of fartists" fxFlex="100" fxFlex.gt-xs="25">
+                  <br>
+                <mat-card  class="p-0">
+                      <mat-card-title class="mat-bg-primary m-0">
+                         <div class="card-title-text">
+                             <span><small>{{art.artistName}}</small><br></span>
+                                      
+                             <span fxFlex></span>
+                            <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                              <mat-icon>more_vert</mat-icon>
+                                      </button>
+                                      <mat-menu #menu1="matMenu">
+                                        <button (click)="navigateToKey($event, art)" mat-menu-item>
+                                          <mat-icon>account_circle</mat-icon>
+                                          <span>Detail</span>
+                                        </button>
+                                         <!-- <button mat-menu-item>
+                                          <mat-icon>notifications_off</mat-icon>
+                                          <span>Disable alerts</span>
+                                        </button>
+                                        <button mat-menu-item>
+                                            <mat-icon>close</mat-icon>
+                                            <span>Remove panel</span>
+                                        </button>  -->
+                                      </mat-menu>
+                                    </div>
+                                <mat-divider></mat-divider>
+                               </mat-card-title>
+                             <img (click)="navigateToKey($event, art)" mat-card-image [src]="art.path">
+                             <!-- <img mat-card-image [src]="artistUrl | async"/> -->
+                                  <mat-card-content>
+                                    <p class="customTruncatedText">
+                                          <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                          {{art.labelName}} 
+                                    </p>
+                                    <!-- <mat-divider class="mb-1"></mat-divider>
+                                    <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                                    <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                                  </mat-card-content> 
+              </mat-card>
+            </div>
+            </div>
+
+
+
+      </mat-tab>
+      <mat-tab label="ファンクラブ・アーティスト">
+       
+        <div *ngIf="artistwithfans" fxFlex="100" fxLayoutWrap="wrap">
+          <div *ngFor="let art of artistwithfans" fxFlex="100" fxFlex.gt-xs="25">
+              <br>
+            <mat-card  class="p-0">
+                  <mat-card-title class="mat-bg-primary m-0">
+                     <div class="card-title-text">
+                         <span><small>{{art.artistName}}</small><br></span>
+                                  
+                         <span fxFlex></span>
+                        <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                          <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu1="matMenu">
+                                    <button (click)="navigateToKey($event, art)" mat-menu-item>
+                                      <mat-icon>account_circle</mat-icon>
+                                      <span>Detail</span>
+                                    </button>
+                                     <!-- <button mat-menu-item>
+                                      <mat-icon>notifications_off</mat-icon>
+                                      <span>Disable alerts</span>
+                                    </button>
+                                    <button mat-menu-item>
+                                        <mat-icon>close</mat-icon>
+                                        <span>Remove panel</span>
+                                    </button>  -->
+                                  </mat-menu>
+                                </div>
+                            <mat-divider></mat-divider>
+                           </mat-card-title>
+                         <img (click)="navigateToKey($event, art)" mat-card-image [src]="art.path">
+                         <!-- <img mat-card-image [src]="artistUrl | async"/> -->
+                              <mat-card-content>
+                                <p class="customTruncatedText">
+                                      <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                      {{art.labelName}} 
+                                </p>
+                                <!-- <mat-divider class="mb-1"></mat-divider>
+                                <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                                <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                              </mat-card-content> 
+          </mat-card>
+        </div>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+
+
+
+   
+
+
+
+</mat-card>

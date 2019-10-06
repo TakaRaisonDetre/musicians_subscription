@@ -1,0 +1,201 @@
+<div *ngIf="auth.user | async as user" fxLayout="row" fxLayoutWrap="wrap">
+   <div  fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">  
+        <mat-card [class.mat-elevation-z0]="!isActive" 
+        [style.border]="'1px solid #ddd'"
+        [style.margin-left]="'15px'">
+        <mat-card-title fxLayoutAlign="start center">
+          <small class="text-muted">あなたのアーティスト</small>
+          <span fxFlex></span>
+          <mat-chip
+          class="icon-chip" 
+          color="primary" 
+          selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+        </mat-card-title>
+        <mat-card-content>
+          <h3 *ngIf="!user.user_managing_artist_count" class="m-0 font-normal">0</h3>
+          <h3 *ngIf="user.user_managing_artist_count" class="m-0 font-normal">{{user.user_managing_artist_count}}</h3>
+          <small class="text-muted">現在の数</small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+ 
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+      <mat-card [class.mat-elevation-z0]="!isActive" 
+      [style.border]="'1px solid #ddd'"
+      [style.margin-left]="'15px'">
+        <mat-card-title>
+          <small class="text-muted">サイト上のプロジェクト</small>
+          <span fxFlex></span>
+          <mat-chip
+          class="icon-chip" 
+          color="accent" 
+          selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+        </mat-card-title>
+        <mat-card-content>
+          <h3 *ngIf="!user.user_managing_project_count" class="m-0 font-normal">0</h3>
+          <h3 *ngIf="user.user_managing_project_count" class="m-0 font-normal">{{user.user_managing_project_count}}</h3>
+          
+          <small class="text-muted">現在の数</small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+      <mat-card [class.mat-elevation-z0]="!isActive" 
+      [style.border]="'1px solid #ddd'"
+      [style.margin-left]="'15px'">
+        <mat-card-title>
+          <small class="text-muted">あなたが寄付した</small>
+          <span fxFlex></span>
+          <mat-chip
+          class="icon-chip" 
+          color="accent" 
+          selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+        </mat-card-title>
+        <mat-card-content>
+          <h3 *ngIf="!user.user_patronizing_artist_count" class="m-0 font-normal">0</h3>
+          <h3 *ngIf="user.user_patronizing_artist_count" class="m-0 font-normal">{{user.user_patronizing_artist_count}}</h3>
+          <small class="text-muted">組のアーティスト</small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+      <mat-card 
+      [class.mat-elevation-z0]="!isActive" 
+      [style.border]="'1px solid #ddd'"
+      [style.margin-left]="'15px'">
+        <mat-card-title>
+          <small class="text-muted">あなたが寄付した</small>
+          <span fxFlex></span>
+          <mat-chip
+          class="icon-chip" 
+          color="accent" 
+          selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+        </mat-card-title>
+        <mat-card-content>
+          <h3 *ngIf="user.user_Patronizing_project_count" class="m-0 font-normal">{{user.user_Patronizing_project_count}}</h3>
+          <h3 *ngIf="!user.user_Patronizing_project_count" class="m-0 font-normal">0</h3>
+          <small class="text-muted">組のプロジェクト</small>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+
+</div>
+
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngIf="auth.user | async as user" fxLayout="column" fxFlex="100" fxFlex.gt-md="50">
+ 
+
+
+    <mat-card class="p-0">
+      <mat-card-title class=" m-0">
+        <div class="card-title-text">
+          <span>{{user.displayName}}さんのセルフ・プロフィール</span>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-card-title>
+      <mat-card-content>
+      
+        <!-- <p [innerHTML]="user.shortIntro"></p> -->
+    <div> <br>
+      <small><p class="text-muted" [innerHTML]="user.shortIntro"></p> </small>
+    </div>
+       
+      </mat-card-content>
+    </mat-card>
+
+<!-- new Connection Request event -->
+<mat-card class="default">
+    <mat-card-title><h6>他のユーザーからの”繋がり”リクエスト</h6></mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-0">
+      <mat-list class="compact-list mb-1">
+        <mat-list-item class="" *ngFor="let n of notification">
+          <img mat-list-avatar class="mr-1" [src]="n.requestFromPhotoURL" alt="">
+          <div fxLayout="row" fxFlex="100">
+            <h6 class="m-0 mr-1"><small>{{n.requestFromName}}</small></h6>
+            <span fxFlex></span>
+            <mat-checkbox (change)="ConfirmConnection($event, n.requestFrom)">Connect me!</mat-checkbox>
+            <span fxFlex></span>
+             <!-- <small class="text-muted mr-1 ml-1">{{ m.date | relativeTime}}</small>  -->
+            <small class="text-muted mr-1 ml-1"></small>
+          
+          </div>
+           <mat-chip mat-sm-chip [color]="'warn'" [selected]="n.connected">{{n.connected ? 'Connected' : 'Requested'}}</mat-chip>
+         
+        
+        </mat-list-item>
+      </mat-list>
+      <div class="text-center">
+        <!-- <button mat-button class="full-width">View all</button> -->
+      </div>
+    </mat-card-content>
+</mat-card>
+
+
+
+  </div>
+  
+  <div fxLayout="column" fxFlex="100" fxFlex.gt-md="50">
+ 
+<!-- media event -->
+<mat-card class="default">
+  <mat-card-title><h6>他のユーザーが企画しているイベント案</h6></mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content class="p-0">
+    <mat-list class="compact-list mb-1">
+      <mat-list-item class="" *ngFor="let m of mediaEvent">
+        <img mat-list-avatar class="mr-1" [src]="m.path" alt="">
+        <div fxLayout="row" fxFlex="100">
+          <h6 class="m-0 mr-1"><small (click)="NavigatetoProject($event, m)">{{m.project_name | excerpt:10 }}</small></h6>
+          <span fxFlex></span>
+          <div fxFlex="40"><small>{{m.project_owner | excerpt:10 }}</small></div>
+          <span fxFlex></span>
+           <small class="text-muted mr-1 ml-1">{{ m.date | relativeTime}}</small> 
+          <small class="text-muted mr-1 ml-1"></small>
+        
+        </div>
+         <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen">{{m.isOpen ? 'energeia' : 'dunamise'}}</mat-chip>
+       
+      
+      </mat-list-item>
+    </mat-list>
+    <div class="text-center">
+      <!-- <button mat-button class="full-width">View all</button> -->
+    </div>
+  </mat-card-content>
+</mat-card>
+<!-- new artists event -->
+<mat-card class="default">
+    <mat-card-title><h6>新規登録アーティスト</h6></mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-0">
+      <mat-list class="compact-list mb-1">
+        <mat-list-item class="" *ngFor="let art of art">
+          <img mat-list-avatar class="mr-1" [src]="art.path" alt="">
+          <div fxLayout="row" fxFlex="100">
+            <h6 class="m-0 mr-1"><small (click)="NavigatetoArtist($event, art)">{{art.artistName | excerpt:10 }}</small></h6>
+            <span fxFlex></span>
+            <!-- <div fxFlex="40"><small>{{m.project_owner | excerpt:10 }}</small></div> -->
+            <span fxFlex></span>
+             <!-- <small class="text-muted mr-1 ml-1">{{ m.date | relativeTime}}</small>  -->
+            <small class="text-muted mr-1 ml-1"></small>
+          
+          </div>
+           <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen">{{m.isOpen ? 'energeia' : 'dunamise'}}</mat-chip> -->
+         
+        
+        </mat-list-item>
+      </mat-list>
+      <div class="text-center">
+        <!-- <button mat-button class="full-width">View all</button> -->
+      </div>
+    </mat-card-content>
+</mat-card>
+
+  </div>
+</div>

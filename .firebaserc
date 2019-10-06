@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "raisondetre-tokyo"
+  },
+  "targets": {
+    "raisondetre-tokyo": {
+      "hosting": {
+        "en": [
+          "raisondetre-tokyo"
+        ]
+      }
+    }
+  }
+}

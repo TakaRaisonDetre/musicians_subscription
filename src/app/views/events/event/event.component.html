@@ -1,0 +1,238 @@
+ <div fxLayout="row" fxLayoutWrap="wrap"> 
+    <div *ngIf="event" fxFlex="100" fxFlex.gt-md="600px" fxFlex.gt-sm="50">
+    <img [src]="event.path"> 
+    <br><br>
+
+    <div fxLayout="row" fxLayoutWrap="wrap"> 
+        <button *ngIf="!user" (click)="loginfb()" mat-stroked-button mat-button color="primary">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+            </svg>  <small> ログイン/チケット購入</small>
+            </button>
+            <div fxFlex="3"></div>
+            <button *ngIf="!user" (click)="logingoogle()" mat-stroked-button mat-button color="accent">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+            </svg>  <small> ログイン/チケット購入</small>
+          </button>
+          <div fxFlex="3"></div>
+          <button *ngIf="!user" [routerLink]="'/sessions/signup'" mat-stroked-button mat-button color="default">
+              <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                  <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+              </svg> <small> ログイン/チケット購入</small>
+            </button>
+    </div>
+    <br>
+   
+    <form (ngSubmit)="BuyTicket($event, event.id)">
+      <div fxLayout="row" fxLayoutWrap="wrap"> 
+            ログインして、ご連絡先電話番号とチケット購入枚数を指定したらチケット購入ボタンをクリック
+          <mat-form-field *ngIf="auth.user | async as user" class="form-full-width">
+                <mat-label>ご連絡先番号</mat-label>
+                <input matInput placeholder="電話(携帯）番号" [(ngModel)]="telephone" name="telephone">
+                
+                <mat-hint>携帯かご自宅の電話番号</mat-hint>
+          </mat-form-field>
+
+          <div fxFlex="10"></div>
+
+          <mat-form-field *ngIf="auth.user | async as user">
+                  <mat-select placeholder="枚数" name="selected" [(ngModel)]="selected">
+                      <mat-option>チケット購入枚数</mat-option>
+                      <mat-option [value]=1>1</mat-option>
+                      <mat-option [value]=2>2</mat-option>
+                      <mat-option [value]=3>3</mat-option>
+                      <mat-option [value]=4>4</mat-option>
+                      <mat-option [value]=5>5</mat-option>
+                      <mat-option [value]=6>6</mat-option>
+                      <mat-option [value]=7>7</mat-option>
+                      <mat-option [value]=8>8</mat-option>
+                      <mat-option [value]=9>9</mat-option>
+                      <mat-option [value]=10>10</mat-option>
+                      <mat-option [value]=11>11</mat-option>
+                      <mat-option [value]=12>12</mat-option>
+                      <mat-option [value]=13>13</mat-option>
+                      <mat-option [value]=14>14</mat-option>
+                      <mat-option [value]=15>15</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+      </div>  
+      <br>
+
+      <div fxLayout="row" fxLayoutWrap="wrap"> 
+            <div fxFlex="25" fxFlex.gt-sm="50" fxFlex.sm="50"> 
+              <button mat-stroked-button *ngIf="auth.user | async as user" >チケット購入 </button><br><br>
+            </div>
+
+      </div>
+
+
+      <div fxLayout="row" fxLayoutWrap="wrap"> 
+        
+          時間：{{event.start_at}}
+          <div fxFlex="5"></div>
+          日付：{{event.date.seconds * 1000 | date:'MM-dd-yyyy'}}
+          <div fxFlex="5"></div>
+            チケット価格：{{event.ticketprice | currency:'JPY'}}
+          
+      </div>
+   
+  
+    </form>
+<br>
+ 
+  <mat-divider></mat-divider>
+  <h3> イベント場所 : {{event.venue}}</h3>
+  <h3>{{event.project_name}}</h3>
+  <h3>イベント概要</h3>
+    <br>
+    <p [innerHtml]="event.short_description_jp" style="margin-left:15px;margin-right:15px;"></p>
+   
+    <br>
+   <p [innerHtml]="event.short_description_en" style="margin-left:15px;margin-right:15px;"></p>
+  
+    </div>
+
+<div *ngIf="event" fxFlex="100" fxFlex.gt-md="calc(100% - 600px)" fxFlex.gt-sm="50" >
+   <!-- Dashboard card row -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="5"></div>
+       
+          <button *ngIf="!user" (click)="loginfb()" mat-stroked-button mat-button color="primary">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+            </svg>  <small> ログイン/チケット購入</small>
+            </button>
+            <div fxFlex="3"></div>
+            <button *ngIf="!user" (click)="logingoogle()" mat-stroked-button mat-button color="accent">
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+            </svg>  <small> ログイン/チケット購入</small>
+          </button>
+          <div fxFlex="3"></div>
+          <button *ngIf="!user" [routerLink]="'/sessions/signup'" mat-stroked-button mat-button color="default">
+              <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                  <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+              </svg> <small> ログイン/チケット購入</small>
+            </button>
+
+   
+       
+      <mat-card  [class.mat-elevation-z0]="!isActive"  [style.background-color]="'transparent'">
+        <!-- <mat-card 
+        [class.mat-elevation-z0]="!isActive" 
+        [style.border-left]="'1px solid #C1C0C0'" 
+        [style.background-color]="'transparent'"
+        [style.margin-left]="'5px'"> -->
+       
+        ログインして、ご連絡先電話番号とチケット購入枚数を指定したらチケット購入ボタンをクリック
+
+        <form (ngSubmit)="BuyTicket($event, event.id)">
+            <div fxLayout="row" fxLayoutWrap="wrap"> 
+
+                    <mat-form-field *ngIf="auth.user | async as user" class="form-full-width">
+                            <mat-label>ご連絡先番号</mat-label>
+                            <input matInput placeholder="電話（携帯）番号" [(ngModel)]="telephone" name="telephone">
+                            
+                            <mat-hint>携帯かご自宅の電話番号</mat-hint>
+                      </mat-form-field>
+                      <div fxFlex="10"></div>
+
+                <mat-form-field *ngIf="auth.user | async as user">
+                        <mat-select placeholder="枚数" name="selected" [(ngModel)]="selected">
+                            <mat-option>チケット購入枚数</mat-option>
+                            <mat-option [value]=1>1</mat-option>
+                            <mat-option [value]=2>2</mat-option>
+                            <mat-option [value]=3>3</mat-option>
+                            <mat-option [value]=4>4</mat-option>
+                            <mat-option [value]=5>5</mat-option>
+                            <mat-option [value]=6>6</mat-option>
+                            <mat-option [value]=7>7</mat-option>
+                            <mat-option [value]=8>8</mat-option>
+                            <mat-option [value]=9>9</mat-option>
+                            <mat-option [value]=10>10</mat-option>
+                            <mat-option [value]=11>11</mat-option>
+                            <mat-option [value]=12>12</mat-option>
+                            <mat-option [value]=13>13</mat-option>
+                            <mat-option [value]=14>14</mat-option>
+                            <mat-option [value]=15>15</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+      
+            </div>  
+            <br>
+            <div fxLayout="row" fxLayoutWrap="wrap"> 
+                    <div fxFlex="20" fxFlex.gt-sm="50" fxFlex.sm="50"> 
+                    <button mat-stroked-button *ngIf="auth.user | async as user">チケット購入 </button><br><br>
+                    </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutWrap="wrap"> 
+              
+                時間：{{event.start_at}}
+                <div fxFlex="5"></div>
+                日付：{{event.date.seconds * 1000 | date:'MM-dd-yyyy'}}
+                <div fxFlex="5"></div>
+                  チケット価格：{{event.ticketprice | currency:'JPY'}}
+                
+            </div>
+         
+        
+          </form>
+
+         <!-- Fullwidth chart -->
+<!-- <div fxLayout="row" fxLayoutWrap="wrap" [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}"> -->
+    <div fxLayout="row" fxLayoutWrap="wrap">
+      <div fxFlex="100"> 
+        <mat-card class="default"
+            [class.mat-elevation-z0]="!isActive" 
+            [style.border]="'1px solid #ddd'"
+            [style.margin-left]="'0px'"
+            [style.margin-right]="'0px'">
+          <mat-card-title class="">
+            <span>集客グラフ</span>
+            <span fxFlex></span>
+          </mat-card-title>
+          <mat-card-subtitle>チケット売上（金額）</mat-card-subtitle>
+          <mat-card-content class="p-0" [style.height]="'200px'">
+            <canvas  *ngIf="lineChartSteppedData"
+              height="240"
+              baseChart 
+              class="chart m-0"
+             
+              [datasets]="lineChartSteppedData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"></canvas>
+          </mat-card-content>
+        </mat-card>
+      </div> 
+    </div>
+ 
+  <div fxLayout="row" fxLayoutWrap="wrap">
+      <mat-tab-group style="margin-left:20px;margin-right:15px;">    
+            <mat-tab label="詳細"> 
+            <br>
+            <p [innerHtml]="event.long_description_jp"></p>
+            <br>
+            <p [innerHtml]="event.long_description_en"></p>
+            </mat-tab>
+
+            <mat-tab label="特記条項"> 
+            
+
+            
+            </mat-tab>
+      </mat-tab-group>
+  </div>
+      </mat-card>
+      <br>
+
+    </div>
+</div>
+<br>
+</div>

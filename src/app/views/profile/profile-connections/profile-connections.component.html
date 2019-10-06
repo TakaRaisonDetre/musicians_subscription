@@ -1,0 +1,100 @@
+<!-- connected to -->
+     <mat-card 
+     [class.mat-elevation-z0]="!isActive" 
+     [style.border]="'none'"
+     [style.background-color]="'transparent'"
+     class="p-0">
+       <div *ngIf="connectedTo" fxLayout="row" fxLayoutWrap="wrap">
+         
+         <div *ngFor="let con of connectedTo" fxFlex="100" fxFlex.gt-xs="20">
+             <mat-card  
+             [class.mat-elevation-z0]="!isActive" 
+             [style.border]="'none'"
+             [style.background-color]="'transparent'"
+             [style.margin-left]="'15px'"
+             class="p-0">
+                     <mat-card-title 
+                     [class.mat-elevation-z0]="!isActive" 
+                     [style.border-top]="'solid 1px'"
+                     [style.border-color]="'grey'"
+                     [style.background-color]="'transparent'"
+                     [style.margin-left]="'15px'">
+                        <div class="card-title-text">
+                            <span><small>
+                              {{con.requestFromName}}
+                            </small><br></span>
+                                     
+                            <span fxFlex></span>
+                           <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                             <mat-icon>more_vert</mat-icon>
+                                     </button>
+                                     <mat-menu #menu1="matMenu">
+                                       <button  (click)="gotoindividual($event, con.requestFrom)" mat-menu-item>
+                                         <mat-icon>account_circle</mat-icon>
+                                         <span>Detail</span>
+                                       </button>
+                                       <button (click)="openComposeDialog($event, con.requestFrom, con.requestFromName, con.requestFromPhotoURL)" mat-menu-item>
+                                        <mat-icon>local_post_office</mat-icon>
+                                        <span>Send Detail</span>
+                                      </button>
+                                     </mat-menu>
+                                     
+                                   </div>
+                               <mat-divider></mat-divider>
+                        <img [src]="con.requestFromPhotoURL" mat-card-image>
+                  </mat-card-title>
+              </mat-card>
+          </div>
+        </div> 
+     </mat-card>
+     
+
+     <!-- connected From -->
+     <mat-card 
+     [class.mat-elevation-z0]="!isActive" 
+     [style.border]="'none'"
+     [style.background-color]="'transparent'"
+     class="p-0">
+       <div *ngIf="connectedFrom" fxLayout="row" fxLayoutWrap="wrap">
+         
+         <div *ngFor="let con of connectedFrom" fxFlex="100" fxFlex.gt-xs="20">
+             <mat-card  
+             [class.mat-elevation-z0]="!isActive" 
+             [style.border]="'none'"
+             [style.background-color]="'transparent'"
+             [style.margin-left]="'15px'"
+             class="p-0">
+                     <mat-card-title 
+                     [class.mat-elevation-z0]="!isActive" 
+                     [style.border-top]="'solid 1px'"
+                     [style.border-color]="'grey'"
+                     [style.background-color]="'transparent'"
+                     [style.margin-left]="'15px'">
+                        <div class="card-title-text">
+                            <span><small>
+                              {{con.requestToName}}
+                            </small><br></span>
+                                     
+                            <span fxFlex></span>
+                           <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                             <mat-icon>more_vert</mat-icon>
+                                     </button>
+                                     <mat-menu #menu1="matMenu">
+                                       <button  (click)="gotoindividual($event, con.requestTo)" mat-menu-item>
+                                         <mat-icon>account_circle</mat-icon>
+                                         <span>Detail</span>
+                                       </button>
+                                       <button (click)="openComposeDialog($event, con.requestTo, con.requestToName, con.requestToPhotoURL)" mat-menu-item>
+                                        <mat-icon>local_post_office</mat-icon>
+                                        <span>Send Mail</span>
+                                      </button>
+                                     </mat-menu>
+                                   </div>
+                               <mat-divider></mat-divider>
+                               <img [src]="con.requestToPhotoURL" mat-card-image>
+                    </mat-card-title>
+                </mat-card>
+            </div>
+        </div> 
+     </mat-card>
+     

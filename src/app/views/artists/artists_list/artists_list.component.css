@@ -1,0 +1,9 @@
+.customTruncatedText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h3, span, p{
+    font-family: 'Strait';
+    font-size: 15px;
+}

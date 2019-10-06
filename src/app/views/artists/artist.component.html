@@ -1,0 +1,116 @@
+
+
+
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+    <div *ngIf="artist" fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+     
+    
+      <mat-card 
+    [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'1px solid #ddd'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+      
+      class="profile-sidebar mb-1 pb-0">
+        <div class="propic text-center" >
+          <!-- <div style="text-align:center"> -->
+          <img [src]="artist.path" style="width:300px" alt="">
+        </div>
+        <div class="profile-title text-center mb-1">
+          <div class="main-title"><img src="assets/images/log_new.png" width=60% alt="" class="app-logo">
+            <br><small>{{name}}</small></div>
+          <div class="profile-actions text-center mb-1">
+            
+              <!-- <button mat-raised-button color="primary">Message</button> -->
+              <!-- <button mat-raised-button color="accent" (click)="navigateToKey($event, artist)">YouTube </button> -->
+          </div>
+          <div class="text-muted"></div>
+        </div>
+       
+        <!-- <div class="profile-nav">
+          <mat-nav-list>
+            <mat-list-item routerLinkActive="list-item-active"> 
+              <mat-icon>home</mat-icon>
+              {{'ARTIST-COMPONENT.STATS' | translate}}
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLink="/profile/settings" routerLinkActive="list-item-active">
+              <mat-icon>settings</mat-icon>
+              {{'ARTIST-COMPONENT.FANS' | translate}}
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        <mat-list-item routerLink="/profile/blank" routerLinkActive="list-item-active">
+              <mat-icon>content_paste</mat-icon>
+              Youtube & Spotify
+            </mat-list-item> 
+          </mat-nav-list>
+        </div> -->
+      </mat-card>
+    </div> 
+   
+ 
+
+  
+  <!-- Profile Views -->
+ 
+    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+        <mat-card class="p-0">
+            <!-- <mat-card-title class="">
+              <div class="card-title-text">Bio</div>
+              <mat-divider></mat-divider>
+            </mat-card-title> -->
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="English">
+                  <p class="pt-1">{{short_description_en}}</p>
+                </mat-tab>
+                <mat-tab label="Japanese">
+                  <p class="pt-1"><small>{{short_description_jp}}</small></p>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-card-content>
+          </mat-card>
+    
+
+       
+<!-- router - outlit for other component -->
+          <!-- <router-outlet></router-outlet> -->
+       
+        
+  
+        <div *ngIf="!artists">
+         <!-- <button mat-flat-button class="mat-primary full-width sb-1" (click)="goToAuthorizationPage()"><span>Authenticate by Spotify</span></button>  -->
+        </div>
+             <div *ngIf="artists && artist" class="artist-results">
+              <div class="artist-result" *ngFor="let art of artists">
+
+                   <!-- <button (click)="NavigatetoSpotifyArtist($event, art.id)" class="mat-primary full-width mb-1" mat-flat-button>Check spotify</button>   -->
+                   <!-- <button routerLink="spotify-artist/${{id}}" [queryParams]="{'id': art.id}" class="mat-primary full-width mb-1" mat-flat-button>get Album</button>  -->
+                
+                <!-- <h5 class="name"><a>{{art?.name}}</a></h5> -->
+                   <span *ngFor="let genre of art.genres">{{genre}}</span>
+                
+              </div>
+            </div> 
+            
+        
+        
+        
+
+
+
+        
+       
+<!-- spotify and youtube -->
+
+<router-outlet></router-outlet>
+ <!-- <track></track> 
+<album></album>  -->
+</div>
+
+
+ 
+   
+  </div>
+

@@ -1,0 +1,442 @@
+<div  fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngIf="art" fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+     
+    
+    <mat-card 
+     class="profile-sidebar mb-1 pb-0">
+      <div class="propic text-center" >
+        <!-- <div style="text-align:center"> -->
+        <img [src]="art.path" style="width:300px" alt="">
+        <!-- <a [href]="art.path | async">{{ art.path | async }}</a> -->
+      </div>
+      <div class="profile-title text-center mb-1">
+        <div class="main-title"><img src="assets/images/log_new.png" width=60% alt="" class="app-logo">
+          <h5>{{art.artistName}}</h5>
+           <h3>{{art.website}}</h3>
+        </div>
+
+        <div class="profile-actions text-center mb-1">
+             <!-- <button mat-raised-button color="primary">{{'ARTIST-COMPONENT.MESSAGE' | translate}}</button> -->
+            <button (click)="followthisArtist()" mat-raised-button color="accent">
+              <mat-icon>check</mat-icon>
+              <!-- <span class="notification-number mat-bg-warn"></span> -->
+           Follow
+            </button> 
+        </div>
+        <div class="text-muted"></div>
+      </div>
+     
+      <div class="profile-nav">
+        <mat-nav-list>
+          <mat-list-item (click)="watchBasic()" routerLinkActive="list-item-active">
+                <mat-icon>account_circle</mat-icon>
+                バイオグラフィー
+              </mat-list-item>
+              <mat-divider></mat-divider>
+          <mat-list-item (click)="navigateToKey($event, art)" routerLinkActive="list-item-active"> 
+            <mat-icon>picture_in_picture</mat-icon>
+              ビデオ
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item (click)="watchFollowers()" routerLinkActive="list-item-active">
+            <mat-icon>accessibility_new</mat-icon>
+              フォロワー
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <!-- <mat-list-item routerLink="/profile/blank" routerLinkActive="list-item-active">
+            <mat-icon>content_paste</mat-icon>
+            Youtube & Spotify
+          </mat-list-item> -->
+        </mat-nav-list>
+      </div>
+    </mat-card>
+
+    <!-- <mat-card class="p-0" *ngIf="art && !art.featured"> -->
+      <!--regular donation-->
+      <mat-card class="p-0" *ngIf="art && art.isFunding==true && art.isMonthlySubscribed==false">
+      <div *ngIf="patron ; then donated else potential">
+        <!-- ng template is located in here -->
+      </div>
+      <ng-template #donated>
+      <mat-card-title class="">
+          <div  class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+            <mat-icon>supervisor_account</mat-icon>
+            ブロンズ　￥3000
+            <mat-divider></mat-divider><br><br>
+            すでに貴方はパトロンです.
+          </div>
+          <mat-divider></mat-divider>
+        </mat-card-title> 
+      </ng-template>
+      <ng-template #potential>
+        <mat-card-title class="">
+            <div  class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+              <mat-icon>supervisor_account</mat-icon>
+              ブロンズ　￥3000
+              <mat-divider></mat-divider><br><br>
+              <button  mat-raised-button (click)="navigatetoKeyBronze($event, art.id)"   color="primary">パトロンになる</button>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title> 
+        </ng-template>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Reward in Japanese">
+                 <p style="font-size:13px" class="pt-1" [innerHTML]="art.bronze_reward_jp"></p>
+            </mat-tab>
+            <mat-tab label="Reward in English">
+                 <small><p class="pt-1" [innerHTML]="art.bronze_reward"></p></small> 
+            </mat-tab>
+          
+           
+           
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="p-0" *ngIf="art && art.isFunding==true && art.isMonthlySubscribed==false"  style="background-color:lightgrey;color:white">
+       <div *ngIf="patron; then donated else potential">
+         <!-- ng template is located in here -->
+       </div>
+       <ng-template #donated>
+        <mat-card-title class="">
+            <div class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+              <mat-icon>supervisor_account</mat-icon>
+              シルバー　￥5000
+              <mat-divider></mat-divider><br><br>
+              すでに貴方はパトロンです.
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title> 
+        </ng-template>
+       <ng-template #potential>
+        <mat-card-title class="">
+            <div  class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+              <mat-icon>supervisor_account</mat-icon>
+              シルバー　￥5000
+              <mat-divider></mat-divider><br><br>
+              <button  mat-raised-button (click)="navigatetoKeySilver($event, art.id)" color="primary">パトロンになる</button>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title> 
+        </ng-template>
+          <mat-card-content>
+            <mat-tab-group>
+             
+              <mat-tab label="Reward in Japanese">
+                    <p class="pt-1" [innerHTML]="art.silver_reward_jp"></p>
+              </mat-tab>
+              <mat-tab label="Reward in English">
+                  <p class="pt-1" [innerHTML]="art.silver_reward"></p>
+             </mat-tab>
+             
+            </mat-tab-group>
+          </mat-card-content>
+      </mat-card>
+
+      <mat-card class="p-0" *ngIf="art && art.isFunding==true && art.isMonthlySubscribed==false" style="background-color:goldenrod;color:white">
+          <div *ngIf="patron  ; then donated else potential">
+            <!-- ng template is located in here -->
+          </div>
+          <ng-template #donated>
+          <mat-card-title class="">
+              <div  class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+                <mat-icon>supervisor_account</mat-icon>
+                ゴールド　￥15000
+                <mat-divider></mat-divider><br><br>
+                すでに貴方はパトロンです.
+              </div>
+              <mat-divider></mat-divider>
+            </mat-card-title> 
+            </ng-template>
+            <ng-template #potential>
+              <mat-card-title class="">
+                <div  class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+                  <mat-icon>supervisor_account</mat-icon>
+                  ゴールド　￥15000
+                  <mat-divider></mat-divider><br><br>
+                  <button  mat-raised-button (click)="navigatetoKeyGold($event, art.id)"  color="primary">パトロンになる</button>
+                </div>
+                <mat-divider></mat-divider>
+              </mat-card-title> 
+            </ng-template>
+            <mat-card-content>
+              <mat-tab-group>
+               
+                <mat-tab label="Reward in Japanese">
+                      <p class="pt-1" [innerHTML]="art.gold_reward_jp"></p>
+                </mat-tab>
+                <mat-tab label="Reward in English">
+                    <p class="pt-1" [innerHTML]="art.gold_reward"></p>
+               </mat-tab>
+               
+              </mat-tab-group>
+            </mat-card-content>
+      </mat-card>  
+
+  </div> 
+
+
+
+  <div  fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+    
+      <div [style.margin-left]="'15px'" fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100">
+
+              <button *ngIf="!user" (click)="loginfb()" mat-stroked-button mat-button color="primary">
+                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                      <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+                  </svg>  <small style="font-size:12px"> ログイン</small>
+                  </button>
+                  <div fxFlex="3"></div>
+                  <button *ngIf="!user" (click)="logingoogle()" mat-stroked-button mat-button color="accent">
+                  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                      <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+                  </svg>  <small style="font-size:12px"> ログイン</small>
+                </button>
+                <div fxFlex="3"></div>
+                <button *ngIf="!user" [routerLink]="'/sessions/signup'" mat-stroked-button mat-button color="default">
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+                    </svg> <small style="font-size:12px"> ログイン</small>
+                  </button>
+                 
+                 
+
+          </div>
+          <div fxFlex="100" *ngIf="!user"><br>
+              <p>ログインして、サポートをしましょう。</p>
+          </div>
+        </div>
+
+   <div fxLayout="row" fxLayoutWrap="wrap">
+
+      <div  fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">  
+           <mat-card [class.mat-elevation-z0]="!isActive" 
+           [style.border]="'1px solid #ddd'"
+           [style.margin-left]="'15px'">
+           <mat-card-title fxLayoutAlign="start center">
+             <small class="text-muted">Donor</small>
+             <span fxFlex></span>
+             <mat-chip
+             class="icon-chip" 
+             color="primary" 
+             selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+           </mat-card-title>
+           <mat-card-content>
+             <h2 *ngIf="art" class="m-0 font-normal">{{art.artist_patron_count | number}}</h2>
+             <small class="text-muted">Current</small>
+           </mat-card-content>
+         </mat-card>
+       </div>
+    
+       <div  fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+         <mat-card [class.mat-elevation-z0]="!isActive" 
+         [style.border]="'1px solid #ddd'"
+         [style.margin-left]="'15px'">
+           <mat-card-title>
+             <small class="text-muted">Donation</small>
+             <span fxFlex></span>
+             <mat-chip
+             class="icon-chip" 
+             color="accent" 
+             selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+           </mat-card-title>
+           <mat-card-content>
+             <h2 *ngIf="art" class="m-0 font-normal">{{art.artist_patron_amount | currency:'JPY'}}</h2>
+             <small class="text-muted">Current</small>
+           </mat-card-content>
+         </mat-card>
+       </div>
+     
+       <div  fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="33">
+          <mat-card [class.mat-elevation-z0]="!isActive" 
+          [style.border]="'1px solid #ddd'"
+          [style.margin-left]="'15px'">
+            <mat-card-title>
+              <small class="text-muted">Follower</small>
+              <span fxFlex></span>
+              <mat-chip
+              class="icon-chip" 
+              color="accent" 
+              selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+            </mat-card-title>
+            <mat-card-content>
+              <h2 *ngIf="art" class="m-0 font-normal">{{art.artist_follower_count}}</h2>
+              <small class="text-muted">Current</small>
+            </mat-card-content>
+          </mat-card>
+        </div>
+   
+   
+   
+   </div>
+    
+   <div [style.margin-left]="'15px'"  fxLayout="row" fxLayoutWrap="wrap">
+
+ <!--<div fxFlex="100" fxFlex.gt-xs="50">
+      <youtube-player
+      [style.margin-left]="'15px'" 
+      [videoId]="art.video_one"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)">
+      </youtube-player> 
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="50">
+      <youtube-player
+      [style.margin-left]="'15px'" 
+      [videoId]="art.video_two"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)">
+      </youtube-player> 
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="50">
+      <youtube-player
+      [style.margin-left]="'15px'" 
+      [videoId]="art.video_three"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)">
+      </youtube-player> 
+  </div>
+  <div fxFlex="100" fxFlex.gt-xs="50">
+      <youtube-player
+      [style.margin-left]="'15px'" 
+      [videoId]="art.video_four"
+      (ready)="savePlayer($event)"
+      (change)="onStateChange($event)">
+      </youtube-player> 
+  </div> -->
+</div>
+
+
+
+<!-- Fullwidth chart -->
+<!-- <div fxLayout="row" fxLayoutWrap="wrap" [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}"> -->
+    <div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100">
+      <mat-card class="default"
+          [class.mat-elevation-z0]="!isActive" 
+          [style.border]="'1px solid #ddd'"
+          [style.margin-left]="'15px'"
+          [style.margin-right]="'12px'">
+        <mat-card-title class="">
+          <span>寄付額グラフ</span>
+          <span fxFlex></span>
+        </mat-card-title>
+        <mat-card-subtitle>ドネーション（金額）</mat-card-subtitle>
+        <mat-card-content class="p-0" [style.height]="'200px'">
+          <canvas  *ngIf="lineChartSteppedData"
+            height="240"
+            baseChart 
+            class="chart m-0"
+           
+            [datasets]="lineChartSteppedData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+    
+    <!-- short description  -->
+    <mat-card 
+    [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'none'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+    *ngIf="art && basicState" class="p-0">
+       <!-- <mat-card-title class="">
+        <div class="card-title-text" id="card-title">{{'PROFILE-COMPONENT.PROJECTSHORT' | translate}}</div>
+        <mat-divider></mat-divider>
+      </mat-card-title>  -->
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="日本語">
+              
+              <mat-divider></mat-divider>
+              <p class="pt-1" [innerHTML]="art.objective_en"></p>  
+             <h5>クラファン目的</h5>
+              <mat-divider></mat-divider>
+              <p class="pt-1" [innerHTML]="art.objective_jp"></p>  
+                <h5>バイオグラフィー</h5>
+                <mat-divider></mat-divider>
+                <p class="pt-1" [innerHTML]="art.short_description_jp"></p>
+                <!-- <h5>クラファン内容</h5>
+                <mat-divider></mat-divider>
+                <p class="pt-1" [innerHTML]="art.long_description_jp"></p> -->
+               
+          </mat-tab>
+          <mat-tab label="英語">
+              <h5>Funding Objective</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="art.objective_en"></p>
+              <h5>Short Bio</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="art.short_description_en"></p>
+            <!-- <h5>Detail for Fundraising</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="art.long_description_en"></p> -->
+          
+          </mat-tab>
+          <mat-tab *ngIf="art && art.isMonthlySubscribed==true" label="ファンクラブ">
+            <br><br>
+            <p>
+             
+            {{art.artistName}}のファンクラブにご加入いただけます。{{art.artistName}}がファンクラブ限定のサービスを
+            貴方にお届けします。楽屋に訪問したり、プライベート・パーティ・イベントに参加したり、ライブに無料で招待されたり、{{art.artistName}}と
+            貴方の距離がグッと近くなるファンクラブに是非、この機会にご加入ください。ご加入希望の方は以下ボタンをクリック。
+            
+            </p>
+            <mat-divider></mat-divider>
+            <br><br>
+              <button  (click)="navigateToKeyFanclub($event, art.id)" mat-raised-button color="red">加入手続きに進む</button>
+          
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+
+    
+
+    </mat-card>  
+
+   
+  <!-- fan list -->
+  <mat-card *ngIf="followerState" class="p-0">
+      
+      <mat-card-content class="p-0" *ngIf="art_follower$ | async as art_follower">
+        <mat-list *ngFor="let follower of art_follower.recentFollowers" class="compact-list mb-1">
+          <mat-list-item class="" (click)="navigateToUser($event, follower.userId)">
+            <img mat-list-avatar class="mr-1" [src]="follower.photoURL" alt="">
+            <div fxLayout="row" fxFlex="100">
+              <h6 class="m-0 mr-1"><small>{{follower.displayName }}</small></h6>
+              <span fxFlex></span>
+           
+              <small class="text-muted mr-1 ml-1"></small>
+            
+            </div>
+             <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+           
+          
+          </mat-list-item>
+        </mat-list>
+        <div class="text-center">
+          <button mat-button class="full-width"> {{art_follower.artist_follower_count}} のフォローワーをチェック</button>
+        </div>
+        
+      </mat-card-content>
+      
+    </mat-card> 
+
+  
+
+  
+</div>
+
+
+</div>
+
+<!-- <videos-block></videos-block> -->

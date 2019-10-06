@@ -1,0 +1,71 @@
+<!-- The video -->
+<video autoplay muted loop id="myVideo">
+  <source src="assets/videos/magic.mp4" type="video/mp4">
+</video>
+
+
+<div class="page-wrap height-100 mat-bg-primary">
+  <div class="session-form-hold">
+    <mat-progress-bar mode="determinate" class="session-progress"></mat-progress-bar>
+    <mat-card>
+      <mat-card-content>
+        <div class="text-center pb-1">
+          <img src="assets/images/log_new.png" alt="" class="mb-05">
+          <p class="text-muted m-0">新規登録する</p>
+        </div>
+        <form [formGroup]="signupForm"  (ngSubmit)="signup()">
+          <div class="">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                type="email"
+                name="email"
+                formControlName="email"
+                placeholder="Your Email"
+                value="">
+            </mat-form-field>
+            <small *ngIf="formErrors.email">
+                {{ formErrors.email }}
+            </small>
+          </div>
+
+          <div class="">
+            <mat-form-field class="full-width">
+              <input 
+                type="password"
+                name="password"
+                [value]="password"
+                matInput
+                formControlName="password"
+                placeholder="Password - more than 6 letter with digits" 
+                value="">
+                <small><mat-hint text-align="right">{{password?.value.length || 0}}/6</mat-hint></small> 
+            </mat-form-field>
+           
+            <small *ngIf="formErrors.password">
+                {{ formErrors.password }}
+            </small>
+          </div>
+          
+          
+          
+          <!-- <div class="pb-1">
+            <mat-checkbox
+              name="agreed"
+               [formControl]="signupForm.controls['agreed']" 
+              class="pb-1">I have read and agree to the terms of service.</mat-checkbox>
+
+              <small 
+                *ngIf="signupForm.controls['agreed'].hasError('agreed') && signupForm.controls['agreed'].touched" 
+                class="form-error-msg"> You must agree to the terms and conditions </small>
+          </div> -->
+
+          <button mat-raised-button class="mat-primary full-width mb-1" [disabled]="signupForm.invalid">登録</button>
+          <div class="text-center">
+            <a [routerLink]="'/sessions/signin'" class="mat-primary text-center full-width">既にアカウントをお持ちの方</a>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

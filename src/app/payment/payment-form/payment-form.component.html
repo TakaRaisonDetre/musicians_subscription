@@ -1,0 +1,79 @@
+<fieldset>
+
+    <form #paymentForm="ngForm" (ngSubmit)="formHandler()" class="checkout">
+        <div class="form-row">
+        <label for="card-info">クレジットカードでのお支払い</label>
+
+        <div id="card-element" #cardElement></div>
+        <div id="card-errors" class="help is-danger" role="alert" *ngIf="formError">{{ formError }}</div>
+        </div>
+
+        <div *ngIf="totalAmount; then pay else save;">
+            <!-- ng-template appears here -->
+        </div>
+    </form>
+
+</fieldset>
+ 
+<!-- Template when Charging Card -->
+
+<ng-template #pay>
+    
+    <!-- <button type="submit" 
+            mat-raised-button color="primary" 
+            [disabled]="!formComplete || loading"
+            [class.is-loading]="loading"
+            mat-raised-button color="accent">
+           
+     Pay {{ totalAmount | stripe | currency:'JPY'}}
+
+    </button> -->
+
+    <button type="submit" 
+    mat-raised-button color="primary" 
+    [disabled]="!formComplete || loading"
+    [class.is-loading]="loading"
+    mat-raised-button color="accent">
+   
+     支払う {{ totalAmount |  currency:'JPY'}}
+
+</button>
+
+
+    <div *ngIf="result?.id" class="notification is-success">
+    <h4>貴方の支払いが、間違いなく完了いたしました。ありがとうございました。 </h4>
+    <small>Stripe Message:{{ result.id }} has a status of {{ result.status }} for {{ result.amount | stripe | currency }}</small>    
+    </div>  
+    
+    <!-- If error, show the user the raw error msg from Stripe -->
+    <div *ngIf="result?.error" class="notification is-danger">
+        {{ result.error?.message }}
+    </div>  
+
+</ng-template>
+
+
+
+<!-- Template when Saving Card for Later Use -->
+
+<ng-template #save>
+    <button type="submit" 
+        mat-raised-button color="primary" 
+        [disabled]="!formComplete || loading"
+        [class.is-loading]="loading">
+
+        次回利用のためカード情報を保存
+
+    </button>
+
+    <div *ngIf="result?.id" class="notification is-success">
+        Attached payment source {{ result.id }} -- {{ result.card.brand }} ending in {{ result.card.last4 }}
+    </div>  
+    
+    <!-- If error, show the user the raw error msg from Stripe -->
+    <div *ngIf="result?.error" class="notification is-danger">
+        {{ result.error?.message }}
+    </div>  
+
+</ng-template>
+

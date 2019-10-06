@@ -1,0 +1,126 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Plans and Pricing</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-slide-toggle [(ngModel)]="isAnnualSelected" color="primary" class="mb-1">Get upto 10% discount annually</mat-slide-toggle>
+
+    <div fxLayout="row" fxLayoutWrap="wrap">
+      <!-- Pricing box -->
+      <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card class="plan-pricing text-center p-0">
+          <mat-card-title class="light-gray">
+            <div class="card-title-text">
+              <div class="">Just a Crowdfund</div>
+              <div class="text-sm text-muted">For New Artist</div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+            <h1><strong>FREE</strong></h1>
+            <mat-list dense class="mb-1">
+              <mat-list-item>Multiple Crowd-Funding Accounts</mat-list-item>
+              <mat-list-item>20% fee to us</mat-list-item>
+              <mat-list-item>Translation for first artist</mat-list-item>
+              <!-- <mat-list-item class="text-muted">Unlimited access</mat-list-item>
+              <mat-list-item class="text-muted">Unlimited User</mat-list-item>
+              <mat-list-item class="text-muted">Data analytics</mat-list-item> -->
+            </mat-list>
+            <button mat-raised-button class="mat-accent">Choose</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- Pricing box -->
+      <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card class="plan-pricing text-center p-0">
+          <mat-card-title class="mat-bg-primary">
+            <div class="card-title-text">
+              <div class="">Starter</div>
+              <div class="text-sm text-muted-white">For individual artsits / bands</div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+            <h1>
+              <strong>
+              <span *ngIf="!isAnnualSelected">{{70000 | currency:'JPY'}} /Mo</span>
+              <span *ngIf="isAnnualSelected">{{70000 * 12 * .9 | currency:'JPY'}} /Yr</span>
+              </strong>
+            </h1>
+            <mat-list dense class="mb-1">
+              <mat-list-item>Multiple Crowd-Funding Artists Accounts up to 5 </mat-list-item>
+              <mat-list-item>10% fee to us</mat-list-item>
+              <mat-list-item>20 major J-Online Media Exposure</mat-list-item>
+              <mat-list-item>Social Media exposure at Japan</mat-list-item>
+              
+               <mat-list-item class="text-muted">Japanese Translation for your account</mat-list-item>
+              <!-- <mat-list-item class="text-muted">Data analytics</mat-list-item>  -->
+            </mat-list>
+            <button mat-raised-button class="mat-accent">Choose</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- Pricing box -->
+      <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card class="plan-pricing text-center p-0">
+          <mat-card-title class="light-gray">
+            <div class="card-title-text">
+              <div class="">Business</div>
+              <div class="text-sm text-muted">For Small Agencies and Labels</div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+            <h1>
+              <strong>
+              <span *ngIf="!isAnnualSelected">{{250000 | currency:'JPY'}} /Mo</span>
+              <span *ngIf="isAnnualSelected">{{250000 * 12 * .9 |currency:'JPY'}} /Yr</span>
+              </strong>
+            </h1>
+            <mat-list dense class="mb-1">
+              <mat-list-item>Unlimited Multiple Crowd-Funding Artists </mat-list-item>
+              <mat-list-item>10% of crowd-funding fee</mat-list-item>
+              <mat-list-item>20 major J-Online Media Exposure</mat-list-item>
+              <mat-list-item>Social Media exposure at Japan </mat-list-item>
+              <mat-list-item>YOUTUBER evangelist PR for your artists</mat-list-item>
+            </mat-list>
+            <button mat-raised-button class="mat-accent">Choose</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- Pricing box -->
+      <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card class="plan-pricing text-center p-0">
+          <mat-card-title class="light-gray">
+            <div class="card-title-text">
+              <div class="">Enterprise</div>
+              <div class="text-sm text-muted">For Gov't Related PR Agencies</div>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title>
+          <mat-card-content>
+            <h1>
+              <strong>
+              <span *ngIf="!isAnnualSelected">{{1500000 | currency:'JPY'}} /Mo</span>
+              <span *ngIf="isAnnualSelected">{{1500000 * 12 * .9 | currency:'JPY'}} /Yr</span>
+              </strong>
+            </h1>
+            <mat-list dense class="mb-1">
+              <mat-list-item>Unlimited Multiple Crowd-Funding Artists </mat-list-item>
+              <mat-list-item>5% of crowd-funding fee</mat-list-item>
+              <mat-list-item>20 major J-Online Media Exposure</mat-list-item>
+              <mat-list-item>Social Media exposure at Japan </mat-list-item>
+             
+              <mat-list-item>Legendary Japanese Producers to tag along for new songs & MV</mat-list-item>
+              <mat-list-item>YOUTUBER evangelist PR for your artists</mat-list-item>
+             
+            </mat-list>
+            <button mat-raised-button class="mat-accent">Choose</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>

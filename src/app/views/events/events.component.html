@@ -1,0 +1,74 @@
+
+
+<router-outlet></router-outlet>
+
+
+<h5>現在資金調達中のイベントアイデア（エネルゲイア・イベント）</h5>
+<mat-divider></mat-divider>
+<br>
+ <div *ngIf="event" fxLayout="row" fxLayoutWrap="wrap">
+    <div *ngFor="let ev of event" fxFlex="100" fxFlex.gt-xs="20">
+
+     <mat-card  class="p-0"> 
+        <mat-card-title class="mat-bg-primary m-0">
+           <div class="card-title-text">
+               <span><small>{{ev.project_name | truncate:[7, '...']}}</small><br></span>           
+               <span fxFlex></span>
+              <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu1="matMenu">
+                          <button (click)="navigateToDunamis($event, ev)" mat-menu-item>
+                            <mat-icon>account_circle</mat-icon>
+                            <span>Detail</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                  <mat-divider></mat-divider>
+                </mat-card-title>
+                  <img mat-card-image style="margin-top:15px; margin-left:5px" [src]="ev.path" (click)="navigateToDunamis($event, ev)"> 
+    <mat-card-content>
+                <p class="customTruncatedText">
+                イベント・オーナー : {{ev.project_owner}}
+                </p>
+      </mat-card-content>  
+  </mat-card> 
+
+    </div>
+</div>
+
+
+<h5>チケット販売可能なイベント（デュナミスイベント)
+</h5>
+<mat-divider></mat-divider>
+<br>
+ <div *ngIf="event" fxLayout="row" fxLayoutWrap="wrap">
+    <div *ngFor="let ev of energy" fxFlex="100" fxFlex.gt-xs="20">
+
+     <mat-card  class="p-0"> 
+        <mat-card-title class="mat-bg-primary m-0">
+           <div class="card-title-text">
+               <span><small>{{ev.project_name | truncate:[7, '...']}}</small><br></span>           
+               <span fxFlex></span>
+              <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu1="matMenu">
+                          <button (click)="navigateToDunamis($event, ev)" mat-menu-item>
+                            <mat-icon>account_circle</mat-icon>
+                            <span>Detail</span>
+                          </button>
+                        </mat-menu>
+                      </div>
+                  <mat-divider></mat-divider>
+                </mat-card-title>
+                  <img mat-card-image style="margin-top:15px; margin-left:5px" [src]="ev.path" (click)="navigateToDunamis($event, ev)"> 
+    <mat-card-content>
+                <p class="customTruncatedText">
+                イベント・オーナー : {{ev.project_owner}}
+                </p>
+      </mat-card-content>  
+  </mat-card> 
+
+    </div>
+</div>

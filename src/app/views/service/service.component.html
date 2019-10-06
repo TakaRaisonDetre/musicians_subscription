@@ -1,0 +1,338 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div  fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+          <mat-card 
+          [class.mat-elevation-z0]="!isActive" 
+          [style.border]="'1px solid #ddd'"
+          [style.margin-left]="'5px'">
+          <mat-card-title fxLayoutAlign="start center">
+            <small class="text-muted">ユーザー</small>
+            <span fxFlex></span>
+            <mat-chip
+            class="icon-chip" 
+            color="primary" 
+            selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">{{userRecords + 1000 | number}} ユーザー</h3>
+            <small class="text-muted">現在の値</small>
+          </mat-card-content>
+        </mat-card>
+  </div>
+    
+     
+  <div  fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card 
+        [class.mat-elevation-z0]="!isActive" 
+        [style.border]="'1px solid #ddd'"
+        [style.margin-left]="'15px'">
+          <mat-card-title>
+            <small class="text-muted">利用アーティスト数</small>
+            <span fxFlex></span>
+            <mat-chip
+            class="icon-chip" 
+            color="accent" 
+            selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">{{artistRecords}} アーティスト</h3>
+            <small class="text-muted">現在の値</small>
+          </mat-card-content>
+        </mat-card>
+  </div>
+    
+    
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+        <mat-card 
+        [class.mat-elevation-z0]="!isActive" 
+        [style.border]="'1px solid #ddd'"
+        [style.margin-left]="'15px'">
+          <mat-card-title>
+            <small class="text-muted">プロジェクト数</small>
+            <span fxFlex></span>
+            <mat-chip
+            class="icon-chip" 
+            color="accent" 
+            selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">{{projectRecords | number}} プロジェクト</h3>
+            <small class="text-muted">現在の値</small>
+          </mat-card-content>
+        </mat-card>
+  </div>
+     
+     
+  <div  fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50"> 
+        <mat-card 
+        [class.mat-elevation-z0]="!isActive" 
+        [style.border]="'1px solid #ddd'"
+        [style.margin-left]="'15px'">
+            <mat-card-title>
+              <small class="text-muted">イベント案数</small>
+              <span fxFlex></span>
+              <mat-chip
+              class="icon-chip" 
+              color="accent" 
+              selected="true"><mat-icon>trending_up</mat-icon></mat-chip>
+            </mat-card-title>
+            <mat-card-content>
+              <h3 class="m-0 font-normal">{{eventRecords | number}} イベント案</h3>
+              <small class="text-muted">現在の値</small>
+            </mat-card-content>
+          </mat-card>
+  </div>
+</div>
+     
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+<div fxFlex="100" fxFlex.gt-xs="100">
+  <mat-card>
+  <span>
+      レゾンデートルは、音楽家と慈善団体やNPOがコラボして作る新しい「社会問題に敏感な」多国籍コミュニティです。ユーチューブを使った 音楽活動をしているミュージシャンと
+      慈善団体が同時クラウドファンデイングして様々な社会的問題に焦点をあて 問題認知と解決を図ります。ライブ・イベントをやったり、チャリティ・ガラ・パーティー を開催。
+      様々な社会貢献をしております。また、運営会社のニルバーナコンサルタントは、新人のミュージシャンを発掘して、多くのメジャーアーティストのサウンドを受け持った
+      サウンドプロデユーサーとアーティストをマッチング、アーティスト目線にたったレコードレーベル事業を展開しています。まずはログインから。</span>
+<br><br>
+<button *ngIf="!(auth.user |async)" 
+[routerLink]="['/sessions/signin']"
+mat-stroked-button>
+  まずはログイン
+</button> 
+
+
+  </mat-card>
+</div>
+</div>
+
+
+
+<div fxLayout="row" fxLayoutWrap="wrap">
+
+  <div fxFlex="100" fxFlex.gt-xs="33">
+  <mat-card 
+   class="p-0">
+    <mat-card-title class="m-0">
+      <div class="card-title-text">
+          <mat-icon>flight_land</mat-icon><span fxFlex></span>
+        <span (click)="NavigateFservice()">外国人アーティストの日本デビューのサポート</span>
+        <span fxFlex></span>
+       
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <img (click)="NavigateFservice()" mat-card-image src="assets/images/fartist.jpeg">
+    <mat-card-content>
+      <p class="customTruncatedText">
+        海外からのミュージシャンはバンドの日本における活動をサポート。ロックフェスへのブッキングから日本でのプロデユーサーとコラボやレコーディングをサポート。国境を超えた音楽活動を支援します。 まずはログイン
+             </p>
+       <mat-divider></mat-divider>
+  
+
+    <mat-card-actions>
+      <button *ngIf="!(auth.user |async)"  (click)="loginfb()" mat-mini-fab color="transparent">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+        </svg>  
+        </button>
+        <div fxFlex="3"></div>
+        <button *ngIf="!(auth.user |async)"  (click)="logingoogle()"  mat-mini-fab color="transparent">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+        </svg>  
+      </button>
+      <div fxFlex="3"></div>
+      <button *ngIf="!(auth.user |async)"  [routerLink]="'/sessions/signup'" mat-mini-fab color="transparent">
+          <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+          </svg> 
+        </button>
+
+    </mat-card-actions>
+   
+    
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div fxFlex="100" fxFlex.gt-xs="33">
+  <mat-card  
+   class="p-0">
+    <mat-card-title class="m-0">
+      <div class="card-title-text">
+          <mat-icon>flight_takeoff</mat-icon><span fxFlex></span>
+        <span>邦人アーティスト・プロデユースと海外ツアーのブッキング</span>
+        <span fxFlex></span>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <img  mat-card-image src="assets/images/live.jpeg">
+    <mat-card-content>
+      <p class="customTruncatedText">
+        映像振興機構の補助金制度を利用した海外ツアーのサポートや、メジャーシーンで活躍するサウンド・プロデユーサーとマッチング、デビューを目指す若手ミュージシャンのプロデユースを実施しています。
+      </p>
+
+     <mat-divider></mat-divider>
+     <mat-card-actions>
+      <button *ngIf="!(auth.user |async)"  (click)="loginfb()" mat-mini-fab color="transparent">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+        </svg>  
+        </button>
+        <div fxFlex="3"></div>
+        <button *ngIf="!(auth.user |async)"  (click)="logingoogle()"  mat-mini-fab color="transparent">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+        </svg>  
+      </button>
+      <div fxFlex="3"></div>
+      <button *ngIf="!(auth.user |async)"  [routerLink]="'/sessions/signup'" mat-mini-fab color="transparent">
+          <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+          </svg> 
+        </button>
+
+    </mat-card-actions>
+   
+    </mat-card-content>
+
+   
+  </mat-card>
+</div>
+
+<div fxFlex="100" fxFlex.gt-xs="33">
+  <mat-card 
+   class="p-0">
+    <mat-card-title class="m-0">
+      <div class="card-title-text">
+        <mat-icon>group</mat-icon><span fxFlex></span>
+        <span>サウンド・コラボレーション・プロジェクト</span>
+        <span fxFlex></span>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <img  mat-card-image src="assets/images/colab.jpeg">
+    <mat-card-content>
+      <p class="customTruncatedText">
+        外国人ミュージシャンと邦人ミュージシャンのソングライティング・キャンプの実施や、サウンドコラボ、セッションなどを通じて、国境をこえた新しい音楽のあり方を模索、音楽による国際交流を行います。
+      </p>
+
+       <mat-divider></mat-divider>
+       
+       <mat-card-actions>
+        <button *ngIf="!(auth.user |async)"  (click)="loginfb()" mat-mini-fab color="transparent">
+          <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+          </svg>  
+          </button>
+          <div fxFlex="3"></div>
+          <button *ngIf="!(auth.user |async)"  (click)="logingoogle()"  mat-mini-fab color="transparent">
+          <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+              <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+          </svg>  
+        </button>
+        <div fxFlex="3"></div>
+        <button *ngIf="!(auth.user |async)"  [routerLink]="'/sessions/signup'" mat-mini-fab color="transparent">
+            <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+            </svg> 
+          </button>
+  
+      </mat-card-actions>
+    </mat-card-content>
+
+  
+   
+  </mat-card>
+</div>
+
+<div fxFlex="100" fxFlex.gt-xs="50">
+  <mat-card 
+ class="p-0">
+    <mat-card-title class="m-0">
+      <div class="card-title-text">
+          <mat-icon>monetization_on</mat-icon><span fxFlex></span>
+        <span>アーティスト月額ファンクラブ管理</span>
+        <span fxFlex></span>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <img  mat-card-image src="assets/images/business.jpeg">
+    <mat-card-content>
+      <p class="customTruncatedText">
+        音楽活動を行う上で大事な著作権利、音楽事業の収益原価構造の座学ワークショップを行ったり、音楽活動を円滑にする月額のクラウドファンディングサービスを提供したり、これからの音楽家が知るべき音楽事業のアレコレを共有。
+      </p>
+
+         <mat-divider></mat-divider>
+         <mat-card-actions>
+          <button *ngIf="!(auth.user |async)"  (click)="loginfb()" mat-mini-fab color="transparent">
+            <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+            </svg>  
+            </button>
+            <div fxFlex="3"></div>
+            <button *ngIf="!(auth.user |async)"  (click)="logingoogle()"  mat-mini-fab color="transparent">
+            <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+            </svg>  
+          </button>
+          <div fxFlex="3"></div>
+          <button *ngIf="!(auth.user |async)"  [routerLink]="'/sessions/signup'" mat-mini-fab color="transparent">
+              <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                  <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+              </svg> 
+            </button>
+    
+        </mat-card-actions>
+        
+    </mat-card-content>
+  
+  </mat-card>
+</div>
+ 
+<div fxFlex="100" fxFlex.gt-xs="50">
+  <mat-card 
+  class="p-0">
+    <mat-card-title class="m-0">
+      <div class="card-title-text">
+          <mat-icon>monetization_on</mat-icon><span fxFlex></span>
+        <span>イベントアイデアに対するクラウドファンディング
+        </span>
+        <span fxFlex></span>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <img  mat-card-image src="assets/images/eventIdea.jpg">
+    <mat-card-content>
+      <p class="customTruncatedText">
+        イベントやライブの動員リスクを抑える施策として、イベントのアイデア自体にクラファンを実施、イベントのマーケティングに囚われずに、内容に集中できる仕組みも同サイト上で可能に。面白い、新しいを探求したいイベントオーガナイザーやミュージシャンの方々に利用していただけます。
+      </p>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <button *ngIf="!(auth.user |async)"  (click)="loginfb()" mat-mini-fab color="transparent">
+      <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+          <path fill="#FFFFFF" d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+      </svg>  
+      </button>
+      <div fxFlex="3"></div>
+      <button *ngIf="!(auth.user |async)"  (click)="logingoogle()"  mat-mini-fab color="transparent">
+      <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+          <path fill="#FFFFFF" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+      </svg>  
+    </button>
+    <div fxFlex="3"></div>
+    <button *ngIf="!(auth.user |async)"  [routerLink]="'/sessions/signup'" mat-mini-fab color="transparent">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="#FFFFFF" d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z" />
+        </svg> 
+      </button>
+
+  </mat-card-actions>
+    </mat-card-content>
+  
+   
+  </mat-card>
+</div>
+
+ 
+
+

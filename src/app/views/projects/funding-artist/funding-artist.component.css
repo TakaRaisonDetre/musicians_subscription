@@ -1,0 +1,39 @@
+.website{
+    font-size:11px
+}
+
+.customTruncatedText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+h3, card-title{
+    font-family: 'Teko';
+    font-size:16px;
+    color:black;
+}
+#card-title{
+    font-family: 'Teko';
+    font-size:18px;
+  
+}
+small{
+    font-family: 'Teko';
+    font-size:16px;
+}
+h5{
+    font-family: 'Teko';
+    font-size:18px;
+}
+
+button {
+    font-family: 'Teko';
+    font-size:18px;
+    
+}
+
+mat-tab label{
+    font-family: 'Teko';
+    font-size:18px;
+    
+}

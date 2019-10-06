@@ -1,0 +1,156 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngIf="auth.user | async; then authenticated else guest" fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+   <!-- ng template is located in here -->
+    </div>
+
+    <ng-template #authenticated>
+  <div fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+    <mat-card *ngIf="auth.user | async as user" class="profile-sidebar mb-1 pb-0">
+      <div  class="propic text-center">
+       <img style="width:120px" [src]="user.photoURL" alt=""> 
+      </div>
+      <div class="profile-title text-center mb-1">
+        <div class="main-title">{{user.displayName}}</div>
+        <div class="subtitle mb-05">{{user.mail}}</div>
+       
+        <p class="firebase-text"  ><small>Firebase UID: {{ user.uid }}</small></p>
+        <p class="stripe-text"><small>Stripe ID: {{ user?.stripeCustomerId || 'provisioning' }}</small></p>
+        <div *ngIf="user.subscriptions">
+          <h5>Active Subscriptions</h5>
+          {{ user.subscriptions | json }}
+          <hr>
+        </div>
+        <!-- <div class="text-muted" [innerHTML]="user.shortIntro"></div> -->
+      </div>
+      <div class="profile-actions text-center mb-1">
+        <!-- <button mat-raised-button color="primary">Message</button>
+        <button mat-raised-button color="accent">Follow</button> -->
+      </div>
+      <div class="profile-nav">
+        <mat-nav-list>
+          <mat-list-item routerLink="/profile/overview" routerLinkActive="list-item-active">
+            <mat-icon>home</mat-icon>
+            <div class="span">プロフィール・トップ</div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item routerLink="/profile/settings" routerLinkActive="list-item-active">
+            <mat-icon>settings</mat-icon>
+            <div class="span">ユーザーの情報管理</div>
+            
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item  routerLink="/profile/artist" routerLinkActive="list-item-active">
+            <mat-icon>accessibility</mat-icon>
+            <div class="span">アーティスト管理</div>
+            
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item routerLink="/profile/event" routerLinkActive="list-item-active">
+            <mat-icon>record_voice_over</mat-icon>
+            
+            <div class="span">イベント管理</div>
+          </mat-list-item> 
+          <mat-divider></mat-divider>
+          <mat-list-item routerLink="/profile/connections" routerLinkActive="list-item-active">
+            <mat-icon>people</mat-icon>
+            <div class="span"> ユーザーのコネクション</div>
+           
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item routerLink="/profile/inbox" routerLinkActive="list-item-active">
+            <mat-icon>touch_app</mat-icon>
+            <div class="span"> ユーザーのメール</div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item routerLink="/profile/revenue" routerLinkActive="list-item-active">
+            <mat-icon>trending_up</mat-icon>
+            <div class="span"> 収益状況</div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </mat-card>
+
+        <!-- Contact Information -->
+        <!-- <mat-card *ngIf="auth.user | async as user" class="default">
+          <mat-card-title><small>Contact Info</small> </mat-card-title>
+          <mat-card-content class="pt-0">
+            <mat-list>
+              <mat-list-item><mat-icon class="mr-1">public</mat-icon> {{user.website}}</mat-list-item>
+              <mat-list-item><mat-icon class="mr-1">email</mat-icon> {{user.contactMail}}</mat-list-item>
+              <mat-list-item><mat-icon class="mr-1">phone</mat-icon> {{user.telephone}}</mat-list-item>
+              <mat-list-item><mat-icon class="mr-1">add_location</mat-icon>{{user.city}}, {{user.StreetAddress}}</mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>  -->
+
+
+
+
+
+    <!-- Chart grid -->
+     <!-- <mat-card class="default">
+      <mat-card-title>Summary</mat-card-title>
+      <mat-card-content>
+          <div fxLayout="row" fxLayoutWrap="wrap" class="doughnut-grid text-center">
+              <div fxFlex="50" class="doughnut-grid-item mat-bg-primary">
+                  <canvas 
+                  baseChart
+                  class="chart"
+                  [data]="doughnutChartData1"
+                  [options]="doughnutOptions"
+                  [colors]="doughnutChartColors"
+                  [chartType]="doughnutChartType"></canvas>
+                  <small>Space: {{data1}}/{{total1}} GB</small>
+            </div>
+            <div fxFlex="50" class="doughnut-grid-item light-gray">
+                <canvas  
+                baseChart 
+                class="chart"
+                [data]="doughnutChartData2"
+                [options]="doughnutOptions"
+                [colors]="doughnutChartColors"
+                [chartType]="doughnutChartType"></canvas>
+                <small>Sales: 450</small>
+          </div>
+          <div fxFlex="50" class="doughnut-grid-item light-gray">
+              <canvas  
+              baseChart 
+              class="chart"
+              [data]="doughnutChartData2"
+              [options]="doughnutOptions"
+              [colors]="doughnutChartColors"
+              [chartType]="doughnutChartType"></canvas>
+              <small>Spent: $500</small>
+        </div>
+        <div fxFlex="50" class="doughnut-grid-item mat-bg-primary">
+            <canvas 
+            baseChart 
+            class="chart"
+            [data]="doughnutChartData2"
+            [options]="doughnutOptions"
+            [colors]="doughnutChartColors"
+            [chartType]="doughnutChartType"></canvas>
+            <small>Follower: 2000</small>
+      </div>
+        </div>
+      </mat-card-content>
+    </mat-card>  -->
+  
+
+  </div>
+  
+  </ng-template>
+
+<!-- Profile Views -->
+<div fxFlex="100" *ngIf="auth.user | async as user" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+    <router-outlet></router-outlet>
+</div>
+</div>
+  
+
+
+<ng-template #guest>
+    <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+      
+    </div>
+</ng-template>

@@ -1,0 +1,191 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+ 
+ 
+  <div  fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+    <mat-card [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'1px solid #ddd'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+     class="profile-sidebar mb-1 pb-0">
+      <div class="profile-nav">
+        <mat-nav-list>
+          
+          <!-- <mat-list-item routerLink="/projects/project-list">  -->
+            <!-- <mat-list-item (click)="navigatetoProject()"> 
+            <small><mat-icon>fast_forward</mat-icon></small>
+          <small>イベント・社会事業プロジェクト</small> 
+            </mat-list-item>
+          <mat-divider></mat-divider> -->
+
+          <!-- <mat-list-item  routerLink="/projects/funding-artist-list"> -->
+            <mat-list-item (click)="navigatetoArtist()">
+              <small><mat-icon>fast_forward</mat-icon></small>
+            <small>アーティスト・プロジェクト</small> 
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item  routerLinkActive="list-item-active">
+                <small><mat-icon>fast_forward</mat-icon></small>
+            <small>フィルム・プロジェクト</small>  
+                </mat-list-item>
+          <mat-divider></mat-divider>
+          
+          <!-- <mat-list-item routerLink="/profile/blank" routerLinkActive="list-item-active">
+            <mat-icon>content_paste</mat-icon>
+            Youtube & Spotify
+          </mat-list-item> -->
+        </mat-nav-list>
+      </div>
+    </mat-card>
+ </div>
+
+
+
+
+
+ <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+
+  <!-- <mat-card style="background-color:#ffffff">
+      <h5>Featured Projects</h5>
+      <mat-divider></mat-divider>
+    <div *ngIf="featured" fxLayout="row" fxLayoutWrap="wrap">
+        <div *ngFor="let fea of featured" fxFlex="100" fxFlex.gt-xs="25">
+   
+         <mat-card  class="p-0"> 
+             <mat-card-title class="mat-bg-primary m-0">
+               <div class="card-title-text">
+                   <span><small></small><br></span>           
+                   <span fxFlex></span>
+                  <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                    <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu1="matMenu">
+                              <button (click)="navigatetoKey($event, fea)" mat-menu-item>
+                                <mat-icon>account_circle</mat-icon>
+                                <span>Detail</span>
+                              </button>
+                            </mat-menu>
+                          </div>
+                      <mat-divider></mat-divider>
+                    </mat-card-title>
+                 
+                      <img mat-card-image style="margin-top:15px; margin-left:5px" [src]="fea.path" (click)="navigatetoKey($event, fea)">
+                 
+                   
+            <mat-card-content>
+                    <p class="customTruncatedText">
+                                {{fea.project_name | truncate:[7, '...']}}
+                    </p>
+          </mat-card-content>  
+     </mat-card> 
+    
+        </div>
+    </div>
+  </mat-card> -->
+ 
+
+  <mat-card 
+      [class.mat-elevation-z0]="!isActive" 
+     
+      [style.background-color]="'transparent'"
+      [style.margin-left]="'15px'"
+ 
+ class="p-0">
+<div *ngIf="featuredproject && DefaultState==true">
+  <h5>注目プロジェクト</h5>
+  <mat-divider></mat-divider>
+  <br>
+</div>
+
+ <div  *ngIf="featuredproject && DefaultState==true" fxLayout="row" fxLayoutWrap="wrap">
+    
+  
+      <div *ngFor="let fea of featuredproject" fxFlex="100" fxFlex.gt-xs="25">
+        <mat-card  class="p-0">
+                <mat-card-title 
+                [style.height]="'45px'"
+               
+                class="mat-bg-primary m-0">
+                   <div class="card-title-text">
+                       <span><small>{{fea.project_name}}</small><br></span>
+                                
+                       <span fxFlex></span>
+                      <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                        <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu1="matMenu">
+                                  <button (click)="navigatetoProjectKey($event, fea)" mat-menu-item>
+                                    <mat-icon>account_circle</mat-icon>
+                                    <span>Detail</span>
+                                  </button>
+                                
+                                </mat-menu>
+                              </div>
+                          <mat-divider></mat-divider>
+                         </mat-card-title>
+                       <img  (click)="navigatetoProjectKey($event, fea)" mat-card-image [src]="fea.path">
+                            <mat-card-content>
+                              <p class="customTruncatedText">
+                                    <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                    {{fea.project_owner}} 
+                              </p>
+                              <!-- <mat-divider class="mb-1"></mat-divider>
+                              <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                              <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                            </mat-card-content> 
+                          </mat-card>
+                   </div>
+ </div>
+ <div *ngIf="featuredartists && DefaultState==true">
+  <h5>注目アーティスト</h5>
+  <mat-divider></mat-divider>
+  <br>
+</div>
+ <div  *ngIf="featuredartists && DefaultState==true" fxLayout="row" fxLayoutWrap="wrap">
+    
+  
+  <div *ngFor="let fea of featuredartists" fxFlex="100" fxFlex.gt-xs="25">
+    <mat-card  class="p-0">
+            <mat-card-title 
+            [style.height]="'45px'"
+           
+            class="mat-bg-primary m-0">
+               <div class="card-title-text">
+                   <span><small>{{fea.artistName}}</small><br></span>
+                            
+                   <span fxFlex></span>
+                  <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu1">
+                    <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu1="matMenu">
+                              <button (click)="navigatetoArtistKey($event, fea)" mat-menu-item>
+                                <mat-icon>account_circle</mat-icon>
+                                <span>Detail</span>
+                              </button>
+                            
+                            </mat-menu>
+                          </div>
+                      <mat-divider></mat-divider>
+                     </mat-card-title>
+                   <img (click)="navigatetoArtistKey($event, fea)" mat-card-image [src]="fea.path">
+                        <mat-card-content>
+                          <p class="customTruncatedText">
+                                <!-- {{art.short_descrition_jp | truncate:[30, '...']}} -->
+                                {{fea.labelName}} 
+                          </p>
+                          <!-- <mat-divider class="mb-1"></mat-divider>
+                          <button mat-icon-button><mat-icon class="text-muted">favorite</mat-icon></button>
+                          <button  mat-icon-button ><mat-icon  class="text-muted">share</mat-icon></button>-->
+                        </mat-card-content> 
+                      </mat-card>
+               </div>
+</div>
+
+    </mat-card> 
+    
+  
+
+  <router-outlet></router-outlet>
+ </div>
+
+</div>
+

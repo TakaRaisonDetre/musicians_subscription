@@ -1,0 +1,310 @@
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div *ngIf="proj" fxFlex="100" fxFlex.gt-md="300px" fxFlex.gt-sm="50">
+     
+    
+    <mat-card  class="profile-sidebar mb-1 pb-0">
+      <div class="propic text-center" >
+        <!-- <div style="text-align:center"> -->
+        <img [src]="proj.path" style="width:300px" alt="">
+      </div>
+      <div class="profile-title text-center mb-1">
+        <div class="main-title"><img src="assets/images/log_new.png" width=60% alt="" class="app-logo">
+          <br><small>{{proj.project_name}}</small></div>
+        <div class="profile-actions text-center mb-1">
+          <button (click)="followthisProject()" mat-raised-button color="accent">
+            <mat-icon>check</mat-icon>
+            <!-- <span class="notification-number mat-bg-warn"></span> -->
+        Follow
+          </button> 
+        </div>
+        <div class="text-muted"></div>
+      </div>
+     
+      <div class="profile-nav">
+        <mat-nav-list>
+          <mat-list-item (click)="watchBasic()" routerLinkActive="list-item-active"> 
+            <mat-icon>home</mat-icon>
+           Basic Info
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item (click)="watchFollowers()" routerLinkActive="list-item-active">
+            <mat-icon>settings</mat-icon>
+           Followers
+          </mat-list-item>
+          <!-- <mat-divider></mat-divider>
+          <mat-list-item (click)="gotoVideo($event, proj)" routerLinkActive="list-item-active">
+            <mat-icon>content_paste</mat-icon>
+            Youtube 
+          </mat-list-item>  -->
+        </mat-nav-list>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-0" >
+        <mat-card-title class="">
+          <div *ngIf="proj" class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+            <mat-icon>supervisor_account</mat-icon>
+              Bronze Member
+            <mat-divider></mat-divider><br><br>
+            <button mat-raised-button (click)="navigatetoKeyBronze($event, proj.id)"   color="primary">Become a Patron</button>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-card-title> 
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Reward in English">
+                  <p class="pt-1" [innerHTML]="proj.reward_bronze_en"></p>
+                </mat-tab>
+            <mat-tab label="Reward in Japanese">
+                  <p class="pt-1" [innerHTML]="proj.reward_bronze_jp"></p>
+            </mat-tab>
+            
+           
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+
+      
+
+      <mat-card class="p-0" style="background-color:lightgrey;color:white">
+          <mat-card-title class="">
+            <div *ngIf="proj" class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+              <mat-icon>supervisor_account</mat-icon>
+             Siliver Member
+              <mat-divider></mat-divider><br><br>
+              <button mat-raised-button (click)="navigatetoKeySilver($event, proj.id)" color="primary">Become a Patron</button>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-card-title> 
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="Reward in English">
+                    <p class="pt-1" [innerHTML]="proj.reward_silver_en"></p>
+              </mat-tab>
+              <mat-tab label="Reward in Japanese">
+                    <p class="pt-1" [innerHTML]="proj.reward_silver_jp"></p>
+              </mat-tab>
+            
+             
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="p-0" style="background-color:goldenrod;color:white">
+            <mat-card-title class="">
+              <div *ngIf="proj" class="card-title-text" id="card-title" style="text-align:center;background-color:white;color:black">
+                <mat-icon>supervisor_account</mat-icon>
+                Gold Member
+                <mat-divider></mat-divider><br><br>
+                <button mat-raised-button (click)="navigatetoKeyGold($event, proj.id)"  color="primary">Become a Patron</button>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-card-title> 
+            <mat-card-content>
+              <mat-tab-group>
+                <mat-tab label="Reward in English">
+                      <p class="pt-1" [innerHTML]="proj.reward_gold_en"></p>
+                </mat-tab>
+                <mat-tab label="Reward in Japanese">
+                      <p class="pt-1" [innerHTML]="proj.reward_gold_jp"></p>
+                </mat-tab>
+              
+               
+              </mat-tab-group>
+            </mat-card-content>
+          </mat-card>  
+
+  </div> 
+
+
+
+  <div *ngIf="proj" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="calc(100% - 300px)">
+    
+    
+    <!-- Fullwidth chart -->
+<!-- <div fxLayout="row" fxLayoutWrap="wrap" [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}"> -->
+  <div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100">
+      <mat-card class="default"
+          [class.mat-elevation-z0]="!isActive" 
+          [style.border]="'1px solid #ddd'"
+          [style.margin-left]="'15px'"
+          [style.margin-right]="'12px'">
+        <mat-card-title class="">
+          <span>Donation</span>
+          <span fxFlex></span>
+        </mat-card-title>
+        <mat-card-subtitle>Monthly Donation Graph</mat-card-subtitle>
+        <mat-card-content class="p-0" [style.height]="'200px'">
+          <canvas  *ngIf="lineChartSteppedData"
+            height="240"
+            baseChart 
+            class="chart m-0"
+           
+            [datasets]="lineChartSteppedData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- short description  -->
+    <mat-card 
+    [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'none'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'"
+    *ngIf="proj && basicState" class="p-0">
+       <!-- <mat-card-title class="">
+        <div class="card-title-text" id="card-title">{{'PROFILE-COMPONENT.PROJECTSHORT' | translate}}</div>
+        <mat-divider></mat-divider>
+      </mat-card-title>  -->
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="Japnese">
+                <h5>Short Description</h5>
+                <mat-divider></mat-divider>
+                <p class="pt-1" [innerHTML]="proj.short_description_jp"></p>
+                <h5>Detail Explanation</h5>
+                <mat-divider></mat-divider>
+                <p class="pt-1" [innerHTML]="proj.long_description_jp"></p>
+                <h5>Objective</h5>
+                <mat-divider></mat-divider>
+                <p class="pt-1" [innerHTML]="proj.objective_jp"></p>  
+          </mat-tab>
+          <mat-tab label="English">
+              <h5>Short Description</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="proj.short_description_en"></p>
+            <h5>Detail Explanation</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="proj.long_description_en"></p>
+            <h5>Objective</h5>
+            <mat-divider></mat-divider>
+            <p class="pt-1" [innerHTML]="proj.objective_en"></p>
+          </mat-tab>
+         
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+    
+    
+ <!-- fan list -->
+  <mat-card *ngIf="followerState" class="p-0"> 
+   
+  <mat-card-content class="p-0"  *ngIf="pro_follower$ | async as pro_follower">
+    <mat-list *ngFor="let follower of pro_follower.recentFollowers" class="compact-list mb-1">
+      <mat-list-item class="" (click)="navigateToUser($event, follower.userId)">
+         <img mat-list-avatar class="mr-1" [src]="follower.photoURL" alt=""> 
+      <div fxLayout="row" fxFlex="100"> 
+          <h6 class="m-0 mr-1"><small>{{follower.displayName}}</small></h6>
+          <!-- <span fxFlex></span> -->
+          <mat-divider></mat-divider>
+          <small class="text-muted mr-1 ml-1"></small>
+        
+        </div>
+         <!-- <mat-chip mat-sm-chip [color]="'warn'" [selected]="m.isOpen"></mat-chip> -->
+      </mat-list-item>
+    </mat-list>
+    <div class="text-center">
+      <button mat-button class="full-width">Load all {{ pro_follower.project_follower_count }} followers</button>
+    </div>
+  </mat-card-content>
+</mat-card> 
+
+<mat-card 
+    [class.mat-elevation-z0]="!isActive" 
+    [style.border]="'1px solid #ddd'"
+    [style.background-color]="'transparent'"
+    [style.margin-left]="'15px'">
+  <!-- Input box and send button -->
+  <div class="chat-input-actions" fxLayout="row">
+      <mat-form-field class="full-width mr-1">
+        <input
+        matInput
+        [(ngModel)]="formValue"
+        placeholder=" Your Cheer-up Message !"
+        value="">
+      </mat-form-field>
+      <button mat-fab color="primary" (click)="addComment()"><mat-icon>send</mat-icon></button>
+    </div>
+   <br>
+    <mat-divider></mat-divider>
+    <br>
+
+  <!-- Main Comments body -->
+  <div class="conversations-hold"  *ngIf="post$ | async as post">
+ 
+      <div class="single-conversation sender" fxLayout="row">
+      
+        <div>
+          <h5 class="chat-username text-muted">Comments</h5>
+          <div class="conversation-msg">
+              {{ post.title }}:{{ post.content }}
+          </div>
+          <p>Last Comment: {{ post.lastActivity }}</p><br>
+          <p>Total Comments: {{ post.commentCount }}</p>
+
+           <!-- Aggregated comments on the post document -->
+       <ng-container  *ngIf="!comments$">
+         
+        <div *ngFor="let comment of post.recentComments">
+            <a href="" class="toolbar-avatar online">
+                <img src="assets/images/account-transparent.png" alt="">
+                <span class="status-dot"></span> 
+              </a> {{comment.userdisplayName}}
+          <p>{{ comment.content }}</p>
+           <em>posted {{ comment.createdAt.toDate() | date : 'dd/MM/yyyy h.mma'}}</em> 
+           
+           <mat-divider></mat-divider>
+           <br><br>
+        </div>
+      </ng-container>
+
+       
+    <!-- Firestore comment documents from the subcollection -->
+    <div *ngFor="let comment of comments$ | async">
+        <a href="" class="toolbar-avatar online">
+            <img src="assets/images/account-transparent.png" alt="">
+            <span class="status-dot"></span>
+          </a>{{comment.userdisplayName}}
+        <p>{{ comment.content }}</p>
+        <em>posted {{ comment.createdAt.toDate() | date : 'dd/MM/yyyy h.mma'}}</em>
+        
+        <mat-divider></mat-divider>
+        <br><br>
+    </div>
+  
+    <button mat-raised-button color="primary"  (click)="loadMoreComments()">
+      Load all {{ post.commentCount }} comments
+    </button>
+    
+          <!-- <p class="chat-date text-muted">10 min ago</p> -->
+        </div>
+      </div>
+    </div>
+  
+
+  </mat-card>
+
+
+
+
+
+
+
+
+  </div>
+
+</div>

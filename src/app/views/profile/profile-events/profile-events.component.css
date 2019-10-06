@@ -1,0 +1,40 @@
+progress::-webkit-progress-value{
+    transition:width 0.1s ease;
+}
+img { width:200px}
+
+
+.fileupload-drop-zone{
+ height:180px
+}
+
+.projectImage{
+        border-radius: 50%;
+        height:32px;
+        width:43px
+}
+
+.form-full-width {
+    margin-left:5px;
+    margin-right:5px;
+    min-width: 120px;
+    max-width: 170px;
+    width:100%;
+}
+.left{
+    margin-left:10px;
+    margin-right:10px;
+}
+
+h5 {
+    font-family: "M PLUS Rounded 1c";;
+    font-size:12px;
+}
+h3 {
+    font-family: "M PLUS Rounded 1c";;
+    font-size:15px;
+}
+mat-label{
+    font-family: "M PLUS Rounded 1c";;
+    font-size:13px;
+}

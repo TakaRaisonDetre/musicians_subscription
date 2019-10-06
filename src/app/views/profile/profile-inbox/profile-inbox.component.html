@@ -1,0 +1,171 @@
+
+<mat-sidenav-container>
+  <!-- Inbox left side bar -->
+  <mat-sidenav #sidenav [opened]="isSidenavOpen" mode="side" class="inbox-sidenav">
+    <!-- Compose button -->
+    <button mat-raised-button class="mat-warn full-width"routerLink="/profile/overview">戻る</button>
+    <!-- left side buttons -->
+    <mat-nav-list class="inbox-nav-list" role="list">
+      <mat-list-item class="primary-imenu-item" role="listitem" (click)="IncomingMail_Screen($event)" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon class="text-muted">inbox</mat-icon>
+          <span>受信箱</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item class="primary-imenu-item" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon class="text-muted">folder_special</mat-icon>
+          <span>スター</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item class="primary-imenu-item" role="listitem" (click)="OutgoingMail_Screen($event)" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon class="text-muted">send</mat-icon>
+          <span>送信箱</span>
+        </a>
+      </mat-list-item>
+      <mat-list-item class="primary-imenu-item" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon class="text-muted">drafts</mat-icon>
+          <span>ドラフト</span>
+        </a>
+      </mat-list-item>
+      <!-- <mat-list-item class="primary-imenu-item" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon class="text-muted">error</mat-icon>
+          <span>Spam</span>
+        </a> 
+      </mat-list-item> -->
+
+      <mat-divider></mat-divider>
+
+      <!-- <mat-list-item class="" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon color="primary">people</mat-icon>
+          <span>Social</span>
+        </a>
+      </mat-list-item> -->
+      <mat-list-item class="" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon color="warn">local_offer</mat-icon>
+          <span>Promotions</span>
+        </a>
+      </mat-list-item>
+      <!-- <mat-list-item class="" role="listitem" routerLinkActive="open">
+        <a fxLayout="row">
+          <mat-icon color="accent">forums</mat-icon>
+          <span>Forums</span>
+        </a>
+      </mat-list-item> -->
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="messages-wrap">
+    <mat-toolbar color="primary" class="inbox-toolbar">
+      <!-- Left sidebar toggle button -->
+      <button mat-icon-button (click)="sidenav.toggle()" fxShow [fxShow.gt-sm]="isMobile"><mat-icon>short_text</mat-icon></button>
+      <!-- multiple email select and control -->
+      <!-- <mat-checkbox (change)="selectToggleAll()" class="inbox-toggle-all mr-1"><small>All</small></mat-checkbox> -->
+      <!-- <button mat-icon-button matTooltip="Move to trash"><mat-icon>delete</mat-icon></button> -->
+      <button mat-icon-button matTooltip="Mark as important" class=""><mat-icon>folder_special</mat-icon></button>
+      <button mat-icon-button matTooltip="Move to archive"><mat-icon>archive</mat-icon></button>
+      <button mat-icon-button matTooltip="Report spam"><mat-icon>error</mat-icon></button>
+    </mat-toolbar>
+    <!-- incoming mail -->
+    <mat-accordion *ngIf="IncomingMailScreen_State ">
+      <mat-expansion-panel *ngFor="let message of incomingMail" hideToggle="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <!-- <mat-checkbox 
+            [(ngModel)]="message.selected" 
+            (click)="stopProp($event)" 
+            class="mail-checkbox hide-on-open">
+            </mat-checkbox> -->
+            <button 
+            mat-icon-button 
+            matTooltip="Mark as important"
+            (click)="stopProp($event)" 
+            class="hide-on-open text-muted mr-1"><mat-icon>star_border</mat-icon></button>
+
+            <span class="hide-on-open">{{message.senderName}}</span>
+            <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center" class="show-on-open">
+              <img [src]="message.senderPhoto" alt="" class="inbox-face mr-1">
+              <div fxLayout="column">
+                <span class="m-0" >{{message.senderName}}</span>
+                <small class="text-muted m-0">{{message.sendAt.seconds * 1000  | date:'MM-dd-yyyy'}}</small>
+              </div>
+            </div>
+          </mat-panel-title>
+          <mat-panel-description>
+          <span class="mail-subject text-sm mat-color-default">{{message.subject}}</span>
+          <span fxFlex></span>
+          <span class="text-sm" fxHide.lt-sm="true">{{message.sendAt.seconds * 1000  | date:'MM-dd-yyyy'}}</span>
+          <button mat-icon-button [matMenuTriggerFor]="msgMenu" (click)="$event.stopPropagation()" class="hidden-on-open">
+            <mat-icon class="text-muted">more_vert</mat-icon>
+          </button>
+          <mat-menu #msgMenu="matMenu">
+            <button mat-menu-item 
+            (click)="openComposeDialog($event, message.senderId, message.senderName, message.senderPhoto)">
+            <mat-icon>reply</mat-icon> Reply</button>
+            <button mat-menu-item><mat-icon>archive</mat-icon> Archive</button>
+            <button mat-menu-item (click)="deleteMail($event, message.id)"><mat-icon>delete</mat-icon> Delete</button>
+          </mat-menu>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        <div class="message-text" [innerHTML]="message.message"></div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+ <!-- outgoing mail -->
+ <mat-accordion *ngIf="OutgoingMailScreen_State">
+    <mat-expansion-panel *ngFor="let message of outgoingMail" hideToggle="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-checkbox 
+          [(ngModel)]="message.selected" 
+          (click)="stopProp($event)" 
+          class="mail-checkbox hide-on-open">
+          </mat-checkbox>
+          <button 
+          mat-icon-button 
+          matTooltip="Mark as important"
+          (click)="stopProp($event)" 
+          class="hide-on-open text-muted mr-1"><mat-icon>star_border</mat-icon></button>
+
+          <span class="hide-on-open">{{message.recieverName}}</span>
+          <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="start center" class="show-on-open">
+            <img [src]="message.recieverPhoto" alt="" class="inbox-face mr-1">
+            <div fxLayout="column">
+              <span class="m-0" >{{message.recieverName}}</span>
+              <small class="text-muted m-0">{{message.sendAt.seconds * 1000  | date:'MM-dd-yyyy'}}</small>
+            </div>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+        <span class="mail-subject text-sm mat-color-default">{{message.subject}}</span>
+        <span fxFlex></span>
+        <span class="text-sm" fxHide.lt-sm="true">{{message.sendAt.seconds * 1000  | date:'MM-dd-yyyy'}}</span>
+        <button mat-icon-button [matMenuTriggerFor]="msgMenu" (click)="$event.stopPropagation()" class="hidden-on-open">
+          <mat-icon class="text-muted">more_vert</mat-icon>
+        </button>
+        <mat-menu #msgMenu="matMenu">
+          <!-- <button mat-menu-item><mat-icon>reply</mat-icon> Reply</button> -->
+          <button mat-menu-item><mat-icon>archive</mat-icon> Archive</button>
+          <button mat-menu-item (click)="deleteMail($event, message.id)"><mat-icon>delete</mat-icon> Delete</button>
+        </mat-menu>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <div class="message-text" [innerHTML]="message.message"></div>
+    </mat-expansion-panel>
+  </mat-accordion>
+ 
+ 
+ 
+ 
+ 
+ 
+  </div>
+
+</mat-sidenav-container>

@@ -1,0 +1,59 @@
+<mat-card>
+<h2>Stripe Accounting Dashboard</h2>
+<p>This page demonstrates payment charge history and cards used </p>
+</mat-card>
+
+<mat-card>
+<mat-tab-group>
+    <mat-tab label="Charge History"> 
+
+        <h5>Charge History</h5>
+        <mat-divider></mat-divider>
+        <p><em>Retrieves the <a href="https://stripe.com/docs/api#charges">customer charge history</a> from Stripe.</em></p>
+        
+        <p>Component Usage: <code>&lt;user-charges&gt;&lt;/user-charges&gt;</code></p>
+        
+        <div class="card card-content">
+            <user-charges></user-charges>
+        </div>
+
+
+
+       
+        
+        <h5>Payment Sources</h5>
+        <mat-divider></mat-divider>
+        <p><em>Retrieves the <a href="https://stripe.com/docs/api#sources">customer payment sources</a> from Stripe.</em></p>
+        
+        <p>Component Usage: <code>&lt;user-sources [canSelect]=&quot;true&quot;&gt;&lt;/user-sources&gt;</code></p>
+        
+        <p>When <code>canSelect == true</code>, the component will display a button for each source and emit <code>selectedSource</code> event - this is useful for sharing data between components.</p>
+        
+        <div class="card card-content">
+            <user-sources [canSelect]="false"></user-sources>
+        </div>
+        
+        <h5>Subscriptions</h5>
+        <mat-divider></mat-divider>
+        <p><em>Retrieves the <a href="https://stripe.com/docs/api#customers">customer</a> subscriptions from stripe. </em></p>
+        
+        <p>Component Usage: <code>&lt;user-subscriptions&gt;&lt;/user-subscriptions&gt;</code></p>
+        
+       
+<div class="card card-content">
+    <user-subscriptions></user-subscriptions>
+</div>
+
+
+    </mat-tab>
+    <mat-tab label="Revenue"> 
+
+
+
+    </mat-tab>
+    
+  </mat-tab-group>
+</mat-card>
+
+
+
